@@ -1,18 +1,18 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.builders
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.User
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Privilege
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.privilege.Privilege
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.privilege.PrivilegeDonation
 
 class UserBuilder {
 
     private var mail:String = "user123@fakedomain.com"
     private var password:String = "Mypassword123"
     private var nickName:String = "MyFakeUserTest"
-    private var privilege:Privilege = Privilege()
+    private var privilege: Privilege = PrivilegeDonation()
 
     companion object {
 
-        fun User(): UserBuilder {
+        fun user(): UserBuilder {
             return UserBuilder()
         }
     }
@@ -37,7 +37,7 @@ class UserBuilder {
         return this
     }
 
-    fun withPrivilege(privilege:Privilege): UserBuilder {
+    fun withPrivilege(privilege: Privilege): UserBuilder {
         this.privilege = privilege
         return this
     }

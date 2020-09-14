@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.builders
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Province
 
 class LocationBuilder {
@@ -9,6 +10,7 @@ class LocationBuilder {
     private var province:Province = Province.BuenosAires
     private var population:Int = 0
     private var hasConnection:Boolean = false
+    private var project:Project? = null
 
     companion object {
 
@@ -38,6 +40,11 @@ class LocationBuilder {
 
     fun withHasConnection(connection: Boolean): LocationBuilder {
         this.hasConnection = connection
+        return this
+    }
+
+    fun withProject(project: Project): LocationBuilder {
+        this.project = project
         return this
     }
 }
