@@ -7,7 +7,7 @@ import java.time.LocalDate
 class Project {
 
     var name: String
-    private var donations: MutableList<Donation>
+    var donations: MutableList<Donation>
     var moneyFactor: Float
     private var beginningDate: LocalDate
     private var finishDate: LocalDate

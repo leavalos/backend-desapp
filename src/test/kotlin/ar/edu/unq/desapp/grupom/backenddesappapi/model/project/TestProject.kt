@@ -66,7 +66,7 @@ class TestProject {
     }
 
     @Test(expected = AProjectCannotHaveAMinimumPercentageToFinishBiggerThanOneHundredPercent::class)
-    fun whenAProjectIsCreatedWithMinPercentageBiggerThanOneOndredThenThrowsException() {
+    fun whenAProjectIsCreatedWithMinPercentageBiggerThanOneHundredThenThrowsException() {
         myProjectBuilder
                 .withMinPercentage(101)
                 .build()
@@ -77,5 +77,10 @@ class TestProject {
         myProjectBuilder.withBeginningDate(myBadBeginningDate)
                 .withFinishDate(myBadFinishDate)
                 .build()
+    }
+
+    @Test
+    fun whenAProjectIsCreatedByDefaultThenHisDonationsAreEmpty() {
+        Assert.assertTrue(myProjectByDefault.donations.isEmpty())
     }
 }
