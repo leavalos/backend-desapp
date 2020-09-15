@@ -1,9 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveAMinimumPercentageToFinishLesserThanFiftyPercent
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveEmptyNameException
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorLesserThanZero
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
 import java.lang.RuntimeException
 import java.time.LocalDate
 
@@ -56,6 +53,13 @@ class Project {
 
     private fun verifyMinPercentage(minPercentage: Int) {
         verifyMinPercentageBiggerThanFiftyPercent(minPercentage)
+        verifyMinPercentageLesserThanOneHundredPercent(minPercentage)
+    }
+
+    private fun verifyMinPercentageLesserThanOneHundredPercent(minPercentage: Int) {
+        if (minPercentage > 100) {
+            throw AProjectCannotHaveAMinimumPercentageToFinishBiggerThanOneHundredPercent()
+        }
     }
 
     private fun verifyMinPercentageBiggerThanFiftyPercent(minPercentage: Int) {

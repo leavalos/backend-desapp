@@ -4,10 +4,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.builders.LocationBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveAMinimumPercentageToFinishLesserThanFiftyPercent
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveEmptyNameException
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorLesserThanZero
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -53,5 +50,10 @@ class TestProject {
     @Test(expected = AProjectCannotHaveAMinimumPercentageToFinishLesserThanFiftyPercent::class)
     fun whenAProjectIsCreatedWithMinPercentageLesserThanFiftyPercentThenThrowsException() {
         myProjectBuilder.withMinPercentage(10).build()
+    }
+
+    @Test(expected = AProjectCannotHaveAMinimumPercentageToFinishBiggerThanOneHundredPercent::class)
+    fun whenAProjectIsCreatedWithMinPercentageBiggerThanOneOndredThenThrowsException() {
+        myProjectBuilder.withMinPercentage(101).build()
     }
 }
