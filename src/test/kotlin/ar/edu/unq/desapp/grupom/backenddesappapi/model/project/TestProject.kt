@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location;
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveEmptyNameException
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotMoneyFactorLesserThanZero
 import org.junit.Assert
 import org.junit.Before;
 import org.junit.Test
@@ -30,6 +31,11 @@ class TestProject {
     @Test(expected = AProjectCannotHaveEmptyNameException::class)
     fun whenAProjectHasNewNameThatIsEmptyThenThrowsException() {
         myProjectBuilder.withName("").build()
+    }
+
+    @Test(expected = AProjectCannotMoneyFactorLesserThanZero::class)
+    fun whenAProjectIsCreatedWithMoneyFactorThanZeroThenThrowsException() {
+        myProjectBuilder.withMoneyFactor(-10.0f).build()
     }
 
 }

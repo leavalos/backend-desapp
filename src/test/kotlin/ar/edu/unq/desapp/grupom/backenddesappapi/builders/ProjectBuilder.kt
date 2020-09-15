@@ -10,6 +10,7 @@ import java.time.LocalDate
 class ProjectBuilder {
 
     private var name:String = "MyFakeProject"
+    private var moneyFactor = 1000.0f
     private var donations:MutableList<Donation> = mutableListOf()
     private var privilege: Privilege = PrivilegeDonation()
     private var beginningDate: LocalDate = LocalDate.of(2020, 9, 30)
@@ -35,6 +36,11 @@ class ProjectBuilder {
 
     fun withDonations(donations: MutableList<Donation>): ProjectBuilder {
         this.donations = donations
+        return this
+    }
+
+    fun withMoneyFactor(moneyFactor: Float): ProjectBuilder {
+        this.moneyFactor = moneyFactor
         return this
     }
 

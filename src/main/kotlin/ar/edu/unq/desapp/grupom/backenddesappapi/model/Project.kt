@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveEmptyNameException
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotMoneyFactorLesserThanZero
 import java.lang.RuntimeException
 import java.time.LocalDate
 
@@ -25,9 +26,31 @@ class Project {
         this.location = location
     }
 
+    constructor(name: String, moneyFactor: Float, beginningDate: LocalDate, finishDate: LocalDate, location: Location) {
+        this.verifyParameters(name, moneyFactor)
+        this.name = name
+        this.donations = mutableListOf()
+        this.moneyFactor = moneyFactor
+        this.beginningDate = beginningDate
+        this.finishDate = finishDate
+        this.isFinished = false
+        this.location = location
+    }
+
+    private fun verifyParameters(name: String, moneyFactor: Float) {
+        verifyName(name)
+        verifyMoneyFactor(moneyFactor)
+    }
+
     private fun verifyName(name: String) {
         if (name.isBlank()) {
             throw AProjectCannotHaveEmptyNameException()
+        }
+    }
+
+    private fun verifyMoneyFactor(moneyFactor: Float) {
+        if (moneyFactor < 0.0f) {
+            throw AProjectCannotMoneyFactorLesserThanZero()
         }
     }
 
