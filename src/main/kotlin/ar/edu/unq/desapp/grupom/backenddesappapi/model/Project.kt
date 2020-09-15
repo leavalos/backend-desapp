@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveAMinimumPercentageToFinishLesserThanFiftyPercent
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveEmptyNameException
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorLesserThanZero
@@ -36,7 +37,7 @@ class Project {
             finishDate: LocalDate,
             location: Location,
             minPercentage: Int) {
-        this.verifyParameters(name, moneyFactor)
+        this.verifyParameters(name, moneyFactor, minPercentage)
         this.name = name
         this.donations = mutableListOf()
         this.moneyFactor = moneyFactor
@@ -47,9 +48,20 @@ class Project {
         this.minPercentageToFinish = minPercentage
     }
 
-    private fun verifyParameters(name: String, moneyFactor: Float) {
+    private fun verifyParameters(name: String, moneyFactor: Float, minPercentage: Int) {
         verifyName(name)
         verifyMoneyFactor(moneyFactor)
+        verifyMinPercentage(minPercentage)
+    }
+
+    private fun verifyMinPercentage(minPercentage: Int) {
+        verifyMinPercentageBiggerThanFiftyPercent(minPercentage)
+    }
+
+    private fun verifyMinPercentageBiggerThanFiftyPercent(minPercentage: Int) {
+        if (minPercentage < 50) {
+            throw AProjectCannotHaveAMinimumPercentageToFinishLesserThanFiftyPercent()
+        }
     }
 
     private fun verifyName(name: String) {
