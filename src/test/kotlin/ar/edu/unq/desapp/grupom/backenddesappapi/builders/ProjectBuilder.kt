@@ -6,7 +6,6 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.privilege.Privilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.privilege.PrivilegeDonation
 import java.time.LocalDate
-import kotlin.math.min
 
 class ProjectBuilder {
 
@@ -48,6 +47,16 @@ class ProjectBuilder {
 
     fun withMinPercentage(minPercentage: Int): ProjectBuilder {
         this.minPercentage = minPercentage
+        return this
+    }
+
+    fun withBeginningDate(beginningDate: LocalDate): ProjectBuilder {
+        this.beginningDate = beginningDate
+        return this
+    }
+
+    fun withFinishDate(finishDate: LocalDate): ProjectBuilder {
+        this.finishDate = finishDate
         return this
     }
 

@@ -34,7 +34,7 @@ class Project {
             finishDate: LocalDate,
             location: Location,
             minPercentage: Int) {
-        this.verifyParameters(name, moneyFactor, minPercentage)
+        this.verifyParameters(name, moneyFactor, minPercentage, beginningDate, finishDate)
         this.name = name
         this.donations = mutableListOf()
         this.moneyFactor = moneyFactor
@@ -45,10 +45,23 @@ class Project {
         this.minPercentageToFinish = minPercentage
     }
 
-    private fun verifyParameters(name: String, moneyFactor: Float, minPercentage: Int) {
+    private fun verifyParameters(
+            name: String,
+            moneyFactor: Float,
+            minPercentage: Int,
+            beginningDate: LocalDate,
+            finishDate: LocalDate)
+    {
         verifyName(name)
         verifyMoneyFactor(moneyFactor)
         verifyMinPercentage(minPercentage)
+        verifyDates(beginningDate, finishDate)
+    }
+
+    private fun verifyDates(beginningDate: LocalDate, finishDate: LocalDate) {
+        if (beginningDate.isAfter(finishDate)) {
+            throw AProjectCannotHaveABeginningDateAfterFinishDateException()
+        }
     }
 
     private fun verifyMinPercentage(minPercentage: Int) {
