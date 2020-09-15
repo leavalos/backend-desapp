@@ -15,6 +15,7 @@ class Project {
     private var finishDate: LocalDate
     private var isFinished: Boolean
     private var location: Location
+    var minPercentageToFinish: Int
 
     constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate, location: Location) {
         this.verifyName(name)
@@ -25,9 +26,16 @@ class Project {
         this.finishDate = finishDate
         this.isFinished = false
         this.location = location
+        this.minPercentageToFinish = 100
     }
 
-    constructor(name: String, moneyFactor: Float, beginningDate: LocalDate, finishDate: LocalDate, location: Location) {
+    constructor(
+            name: String,
+            moneyFactor: Float,
+            beginningDate: LocalDate,
+            finishDate: LocalDate,
+            location: Location,
+            minPercentage: Int) {
         this.verifyParameters(name, moneyFactor)
         this.name = name
         this.donations = mutableListOf()
@@ -36,6 +44,7 @@ class Project {
         this.finishDate = finishDate
         this.isFinished = false
         this.location = location
+        this.minPercentageToFinish = minPercentage
     }
 
     private fun verifyParameters(name: String, moneyFactor: Float) {
@@ -73,7 +82,7 @@ class Project {
         user.addDonation(donation)
     }
 
-    fun pointsEarnedWithDonation(donation: Donation): Double {
+    private fun pointsEarnedWithDonation(donation: Donation): Double {
         //Needs to be implemented
         return donation.money
     }

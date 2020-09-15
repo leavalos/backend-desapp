@@ -16,6 +16,7 @@ class ProjectBuilder {
     private var beginningDate: LocalDate = LocalDate.of(2020, 9, 30)
     private var finishDate: LocalDate = LocalDate.of(2020, 10, 30)
     private var location: Location = LocationBuilder.location().build()
+    private var minPercentage: Int = 100
 
     companion object {
 
@@ -26,7 +27,7 @@ class ProjectBuilder {
 
     fun build(): Project {
 
-        return Project(this.name, moneyFactor, beginningDate, finishDate, location)
+        return Project(this.name, moneyFactor, beginningDate, finishDate, location, minPercentage)
     }
 
     fun withName(aName:String): ProjectBuilder {

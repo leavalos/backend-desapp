@@ -43,4 +43,9 @@ class TestProject {
     fun whenAProjectIsCreatedWithMoneyFactorBiggerThanOneHundredThousandThenThrowsException() {
         myProjectBuilder.withMoneyFactor(100001.0f).build()
     }
+
+    @Test
+    fun whenAProjectIsCreatedByDefaultThenHisMinPercentageToFinishIsOneHundred() {
+        Assert.assertEquals(100, this.myProjectByDefault.minPercentageToFinish)
+    }
 }
