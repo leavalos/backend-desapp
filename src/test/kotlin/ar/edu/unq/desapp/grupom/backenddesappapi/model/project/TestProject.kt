@@ -103,4 +103,12 @@ class TestProject {
     fun whenAProjectByDefaultHaveAPopulationOfOneHundredThenTheMinimumBudgetIsOneHundredThousand() {
         Assert.assertTrue(myProjectByDefault.minimumBudget(100).equals(100000.0))
     }
+
+    @Test
+    fun whenAProjectWithACustomMoneyFactorOf2000AndPopulationOf1500ThenTheMinimumBudgetIs3000000() {
+        val myProjectWithDoubleMoneyFactor = myProjectBuilder
+                .withMoneyFactor(2000.0)
+                .build()
+        Assert.assertTrue(myProjectWithDoubleMoneyFactor.minimumBudget(1500).equals(3000000.0))
+    }
 }
