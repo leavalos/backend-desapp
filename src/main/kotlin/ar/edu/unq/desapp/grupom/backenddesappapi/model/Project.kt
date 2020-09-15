@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveEmptyNameException
 import java.lang.RuntimeException
 import java.time.LocalDate
 
@@ -14,6 +15,7 @@ class Project {
     private var location: Location
 
     constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate, location: Location) {
+        this.verifyName(name)
         this.name = name
         this.donations = mutableListOf()
         this.moneyFactor = 1000.0f
@@ -21,6 +23,12 @@ class Project {
         this.finishDate = finishDate
         this.isFinished = false
         this.location = location
+    }
+
+    private fun verifyName(name: String) {
+        if (name.isBlank()) {
+            throw AProjectCannotHaveEmptyNameException()
+        }
     }
 
     fun receiveDonationFrom(user: User, donation: Donation) {
