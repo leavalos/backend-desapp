@@ -1,15 +1,26 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import java.lang.RuntimeException
+import java.time.LocalDate
 
 class Project {
 
-    private var donations: MutableList<Donation>
     var name: String
+    private var donations: MutableList<Donation>
+    var moneyFactor: Float
+    private var beginningDate: LocalDate
+    private var finishDate: LocalDate
+    private var isFinished: Boolean
+    private var location: Location
 
-    constructor(name: String) {
+    constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate, location: Location) {
         this.name = name
         this.donations = mutableListOf()
+        this.moneyFactor = 1000.0f
+        this.beginningDate = beginningDate
+        this.finishDate = finishDate
+        this.isFinished = false
+        this.location = location
     }
 
     fun receiveDonationFrom(user: User, donation: Donation) {
