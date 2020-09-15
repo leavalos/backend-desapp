@@ -40,7 +40,8 @@ dependencies {
 	}
 	testImplementation("junit:junit:4.12")
 	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation("org.mockito:mockito-core:2.23.4")
+	testImplementation("org.mockito:mockito-core:3.5.10")
+	testImplementation("io.mockk:mockk:1.10.0")
 }
 
 tasks.withType<Test> {

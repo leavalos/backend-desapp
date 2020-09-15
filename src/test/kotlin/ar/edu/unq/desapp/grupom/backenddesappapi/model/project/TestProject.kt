@@ -2,12 +2,15 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.project
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.LocationBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
+import io.mockk.mockk
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito
 import java.time.LocalDate
 
 class TestProject {
@@ -17,6 +20,8 @@ class TestProject {
     private lateinit var myProjectBuilder: ProjectBuilder
     private lateinit var myProjectByDefault: Project
     private lateinit var myLocation: Location
+    private lateinit var myListOfDonations: MutableList<Donation>
+    private lateinit var myDonation: Donation
 
     @Before
     fun setUp(){
@@ -24,6 +29,9 @@ class TestProject {
         this.myBadFinishDate = LocalDate.of(2020, 8, 15)
         this.myLocation = LocationBuilder.location().build()
         this.myProjectBuilder = ProjectBuilder.project()
+        this.myDonation = mockk<Donation>()
+        this.myListOfDonations = mutableListOf<Donation>()
+        this.myListOfDonations.add(this.myDonation)
         this.myProjectByDefault = myProjectBuilder.build()
     }
 
@@ -83,4 +91,13 @@ class TestProject {
     fun whenAProjectIsCreatedByDefaultThenHisDonationsAreEmpty() {
         Assert.assertTrue(myProjectByDefault.donations.isEmpty())
     }
+
+    @Test
+    fun whenAProjectIsCreatedWithAListOfDonationsThenTheProjectHaveThatListOfDonations() {
+        val myProjectWithDonations = myProjectBuilder
+                .withDonations(this.myListOfDonations)
+                .build()
+        Assert.assertEquals(this.myListOfDonations, myProjectWithDonations.donations)
+    }
+    //ToDo: Make a test of insert a list of donations
 }

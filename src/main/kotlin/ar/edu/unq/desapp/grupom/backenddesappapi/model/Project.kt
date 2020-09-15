@@ -33,7 +33,8 @@ class Project {
             beginningDate: LocalDate,
             finishDate: LocalDate,
             location: Location,
-            minPercentage: Int) {
+            minPercentage: Int,
+            donations: MutableList<Donation>) {
         this.verifyParameters(name, moneyFactor, minPercentage, beginningDate, finishDate)
         this.name = name
         this.donations = mutableListOf()
@@ -43,6 +44,7 @@ class Project {
         this.isFinished = false
         this.location = location
         this.minPercentageToFinish = minPercentage
+        this.donations = donations
     }
 
     private fun verifyParameters(
