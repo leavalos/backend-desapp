@@ -10,7 +10,6 @@ import io.mockk.mockk
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito
 import java.time.LocalDate
 
 class TestProject {
@@ -29,15 +28,15 @@ class TestProject {
         this.myBadFinishDate = LocalDate.of(2020, 8, 15)
         this.myLocation = LocationBuilder.location().build()
         this.myProjectBuilder = ProjectBuilder.project()
-        this.myDonation = mockk<Donation>()
-        this.myListOfDonations = mutableListOf<Donation>()
+        this.myDonation = mockk()
+        this.myListOfDonations = mutableListOf()
         this.myListOfDonations.add(this.myDonation)
         this.myProjectByDefault = myProjectBuilder.build()
     }
 
     @Test
     fun whenAProjectIsCreatedByDefaultThenHisMoneyFactorIs1000() {
-        Assert.assertEquals(1000.0f, this.myProjectByDefault.moneyFactor)
+        Assert.assertTrue(this.myProjectByDefault.moneyFactor.equals(1000.0))
     }
 
     @Test(expected = AProjectCannotHaveEmptyNameException::class)
@@ -50,14 +49,14 @@ class TestProject {
     @Test(expected = AProjectCannotHaveMoneyFactorLesserThanZero::class)
     fun whenAProjectIsCreatedWithMoneyFactorThanZeroThenThrowsException() {
         myProjectBuilder
-                .withMoneyFactor(-10.0f)
+                .withMoneyFactor(-10.0)
                 .build()
     }
 
     @Test(expected = AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand::class)
     fun whenAProjectIsCreatedWithMoneyFactorBiggerThanOneHundredThousandThenThrowsException() {
         myProjectBuilder
-                .withMoneyFactor(100001.0f)
+                .withMoneyFactor(100001.0)
                 .build()
     }
 
@@ -99,5 +98,9 @@ class TestProject {
                 .build()
         Assert.assertEquals(this.myListOfDonations, myProjectWithDonations.donations)
     }
-    //ToDo: Make a test of insert a list of donations
+
+    @Test
+    fun whenAProjectByDefaultHaveAPopulationOfOneHundredThenTheMinimumBudgetIsOneHundredThousand() {
+        Assert.assertTrue(myProjectByDefault.minimumBudget(100).equals(100000.0))
+    }
 }

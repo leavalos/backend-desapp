@@ -8,7 +8,7 @@ class Project {
 
     var name: String
     var donations: MutableList<Donation>
-    var moneyFactor: Float
+    var moneyFactor: Double
     private var beginningDate: LocalDate
     private var finishDate: LocalDate
     private var isFinished: Boolean
@@ -19,7 +19,7 @@ class Project {
         this.verifyName(name)
         this.name = name
         this.donations = mutableListOf()
-        this.moneyFactor = 1000.0f
+        this.moneyFactor = 1000.0
         this.beginningDate = beginningDate
         this.finishDate = finishDate
         this.isFinished = false
@@ -29,7 +29,7 @@ class Project {
 
     constructor(
             name: String,
-            moneyFactor: Float,
+            moneyFactor: Double,
             beginningDate: LocalDate,
             finishDate: LocalDate,
             location: Location,
@@ -49,7 +49,7 @@ class Project {
 
     private fun verifyParameters(
             name: String,
-            moneyFactor: Float,
+            moneyFactor: Double,
             minPercentage: Int,
             beginningDate: LocalDate,
             finishDate: LocalDate)
@@ -89,18 +89,18 @@ class Project {
         }
     }
 
-    private fun verifyMoneyFactor(moneyFactor: Float) {
+    private fun verifyMoneyFactor(moneyFactor: Double) {
         verifyMoneyFactorBiggerThanZero(moneyFactor)
         verifyMoneyFactorLesserThanOneHundredThousand(moneyFactor)
     }
 
-    private fun verifyMoneyFactorLesserThanOneHundredThousand(moneyFactor: Float) {
+    private fun verifyMoneyFactorLesserThanOneHundredThousand(moneyFactor: Double) {
         if (moneyFactor > 100000.0f) {
             throw AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand()
         }
     }
 
-    private fun verifyMoneyFactorBiggerThanZero(moneyFactor: Float) {
+    private fun verifyMoneyFactorBiggerThanZero(moneyFactor: Double) {
         if (moneyFactor < 0.0f) {
             throw AProjectCannotHaveMoneyFactorLesserThanZero()
         }
@@ -118,12 +118,12 @@ class Project {
         return donation.money
     }
 
-    fun neededBudget(population: Int) : Double{
+    fun neededBudget(population: Int) : Double {
         throw RuntimeException("Not implemented yet!")
     }
 
     fun minimumBudget(population: Int): Double {
-        throw RuntimeException("Not implemented yet!")
+        return population * this.moneyFactor
     }
 
 }
