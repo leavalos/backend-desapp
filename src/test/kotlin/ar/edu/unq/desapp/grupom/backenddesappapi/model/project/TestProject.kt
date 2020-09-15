@@ -5,7 +5,8 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location;
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveEmptyNameException
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotMoneyFactorLesserThanZero
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorLesserThanZero
 import org.junit.Assert
 import org.junit.Before;
 import org.junit.Test
@@ -33,9 +34,13 @@ class TestProject {
         myProjectBuilder.withName("").build()
     }
 
-    @Test(expected = AProjectCannotMoneyFactorLesserThanZero::class)
+    @Test(expected = AProjectCannotHaveMoneyFactorLesserThanZero::class)
     fun whenAProjectIsCreatedWithMoneyFactorThanZeroThenThrowsException() {
         myProjectBuilder.withMoneyFactor(-10.0f).build()
     }
 
+    @Test(expected = AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand::class)
+    fun whenAProjectIsCreatedWithMoneyFactorBiggerThanOneHundredThousandThenThrowsException() {
+        myProjectBuilder.withMoneyFactor(100001.0f).build()
+    }
 }

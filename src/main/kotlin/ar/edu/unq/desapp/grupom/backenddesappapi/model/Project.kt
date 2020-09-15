@@ -1,7 +1,8 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveEmptyNameException
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotMoneyFactorLesserThanZero
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.AProjectCannotHaveMoneyFactorLesserThanZero
 import java.lang.RuntimeException
 import java.time.LocalDate
 
@@ -49,10 +50,22 @@ class Project {
     }
 
     private fun verifyMoneyFactor(moneyFactor: Float) {
-        if (moneyFactor < 0.0f) {
-            throw AProjectCannotMoneyFactorLesserThanZero()
+        verifyMoneyFactorBiggerThanZero(moneyFactor)
+        verifyMoneyFactorLesserThanOneHundredThousand(moneyFactor)
+    }
+
+    private fun verifyMoneyFactorLesserThanOneHundredThousand(moneyFactor: Float) {
+        if (moneyFactor > 100000.0f) {
+            throw AProjectCannotHaveMoneyFactorBiggerThanOneHundredThousand()
         }
     }
+
+    private fun verifyMoneyFactorBiggerThanZero(moneyFactor: Float) {
+        if (moneyFactor < 0.0f) {
+            throw AProjectCannotHaveMoneyFactorLesserThanZero()
+        }
+    }
+
 
     fun receiveDonationFrom(user: User, donation: Donation) {
         this.donations.add(donation)

@@ -26,7 +26,7 @@ class ProjectBuilder {
 
     fun build(): Project {
 
-        return Project(this.name, beginningDate, finishDate, location)
+        return Project(this.name, moneyFactor, beginningDate, finishDate, location)
     }
 
     fun withName(aName:String): ProjectBuilder {
