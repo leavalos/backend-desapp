@@ -5,7 +5,11 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import org.junit.Assert
 import org.junit.Before
@@ -21,6 +25,7 @@ class TestProject {
     private lateinit var myLocation: Location
     private lateinit var myListOfDonations: MutableList<Donation>
     private lateinit var myDonation: Donation
+    private lateinit var myUser: User
 
     @Before
     fun setUp(){
@@ -29,9 +34,14 @@ class TestProject {
         this.myLocation = LocationBuilder.location().build()
         this.myProjectBuilder = ProjectBuilder.project()
         this.myDonation = mockk()
+        every { myDonation.money } returns 1000.0
+
         this.myListOfDonations = mutableListOf()
         this.myListOfDonations.add(this.myDonation)
         this.myProjectByDefault = myProjectBuilder.build()
+        this.myUser = mockk()
+        every { myUser.earnPoints(1000.0)} just Runs
+        every { myUser.addDonation(myDonation) } just Runs
     }
 
     @Test
@@ -111,4 +121,20 @@ class TestProject {
                 .build()
         Assert.assertTrue(myProjectWithDoubleMoneyFactor.minimumBudget(1500).equals(3000000.0))
     }
+
+    @Test
+    fun whenAProjectWithMoneyFactorOf1000AndPopulationOf100ReceivesADonationOf1000ThenTheActualBudgetIs1000() {
+        this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myDonation)
+        Assert.assertTrue(myProjectByDefault.actualBudget().equals(1000.0))
+    }
+
+    /*
+    @Test
+    fun whenAProjectWithMoneyFactorOf1000AndPopulationOf100ReceivesADonationOf1000ThenTheNeededBudgetIs99000() {
+        this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myDonation)
+        Assert.assertTrue(myProjectByDefault.neededBudget(100).equals(99000.0))
+    }
+    */
+    //ToDo: test neededBudget
+    //ToDo: test finishProject
 }

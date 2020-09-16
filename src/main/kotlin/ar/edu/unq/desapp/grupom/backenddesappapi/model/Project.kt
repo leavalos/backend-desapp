@@ -126,4 +126,8 @@ class Project {
         return population * this.moneyFactor
     }
 
+    fun actualBudget(): Double {
+        return donations.map { d -> d.money }.sum()
+    }
+
 }
