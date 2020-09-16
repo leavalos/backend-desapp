@@ -128,13 +128,13 @@ class TestProject {
         Assert.assertTrue(myProjectByDefault.actualBudget().equals(1000.0))
     }
 
-    /*
+
     @Test
     fun whenAProjectWithMoneyFactorOf1000AndPopulationOf100ReceivesADonationOf1000ThenTheNeededBudgetIs99000() {
         this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myDonation)
         Assert.assertTrue(myProjectByDefault.neededBudget(100).equals(99000.0))
     }
-    */
+
     //ToDo: test neededBudget
     //ToDo: test finishProject
 }

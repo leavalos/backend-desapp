@@ -119,7 +119,7 @@ class Project {
     }
 
     fun neededBudget(population: Int) : Double {
-        throw RuntimeException("Not implemented yet!")
+        return this.minimumBudget(population) - this.actualBudget()
     }
 
     fun minimumBudget(population: Int): Double {
