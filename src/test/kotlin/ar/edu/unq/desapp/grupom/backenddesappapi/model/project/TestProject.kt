@@ -134,7 +134,13 @@ class TestProject {
         this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myDonation)
         Assert.assertTrue(myProjectByDefault.neededBudget(100).equals(99000.0))
     }
+/*when a project does not reach the budget needed yet, then its completion status is false
 
-    //ToDo: test neededBudget
+ */
+    @Test
+    fun whenAProjectIsRecentlyCreatedThenHisFinishedStatusIsFalse() {
+        Assert.assertFalse(this.myProjectByDefault.isFinished)
+    }
+
     //ToDo: test finishProject
 }

@@ -11,7 +11,7 @@ class Project {
     var moneyFactor: Double
     private var beginningDate: LocalDate
     private var finishDate: LocalDate
-    private var isFinished: Boolean
+    var isFinished: Boolean
     private var location: Location
     var minPercentageToFinish: Int
 
