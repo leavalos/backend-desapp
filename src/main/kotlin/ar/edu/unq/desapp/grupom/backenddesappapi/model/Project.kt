@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
-import java.lang.RuntimeException
 import java.time.LocalDate
 
 class Project {
@@ -118,16 +117,34 @@ class Project {
         return donation.money
     }
 
-    fun neededBudget(population: Int) : Double {
-        return this.minimumBudget(population) - this.actualBudget()
+    fun neededBudget() : Double {
+        return this.minimumBudget() - this.actualBudget()
     }
 
-    fun minimumBudget(population: Int): Double {
-        return population * this.moneyFactor
+    fun minimumBudget(): Double {
+        return this.location.population * this.moneyFactor
     }
 
     fun actualBudget(): Double {
         return donations.map { d -> d.money }.sum()
+    }
+
+    fun finishProject() {
+        this.verifyNeededBudgetCompleted()
+        this.verifyFinishDateHasPassed()
+        this.isFinished = true
+    }
+
+    private fun verifyFinishDateHasPassed() {
+        if (this.finishDate.isAfter(LocalDate.now())) {
+            throw TheFinishDateOfTheProjectHasNotPassedYetException()
+        }
+    }
+
+    private fun verifyNeededBudgetCompleted() {
+        if (this.neededBudget() > 0.00) {
+            throw TheNeededBudgetOfTheProjectIsNotCompletedYetException()
+        }
     }
 
 }

@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.project
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.LocationBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
@@ -22,26 +21,39 @@ class TestProject {
     private lateinit var myBadBeginningDate: LocalDate
     private lateinit var myProjectBuilder: ProjectBuilder
     private lateinit var myProjectByDefault: Project
-    private lateinit var myLocation: Location
+    private lateinit var myLocationBuilder: LocationBuilder
     private lateinit var myListOfDonations: MutableList<Donation>
     private lateinit var myDonation: Donation
+    private lateinit var myGenerousDonation: Donation
     private lateinit var myUser: User
+    private lateinit var myGoodBeginningDate: LocalDate
+    private lateinit var myGoodFinishDate: LocalDate
+
 
     @Before
     fun setUp(){
         this.myBadBeginningDate = LocalDate.of(2020, 9, 15)
         this.myBadFinishDate = LocalDate.of(2020, 8, 15)
-        this.myLocation = LocationBuilder.location().build()
+        this.myGoodBeginningDate = LocalDate.of(2020, 6, 1)
+        this.myGoodFinishDate = LocalDate.of(2020, 8, 30)
+
+        this.myLocationBuilder = LocationBuilder.location().withPopulation(100)
         this.myProjectBuilder = ProjectBuilder.project()
+        this.myProjectByDefault = myProjectBuilder.build()
+
         this.myDonation = mockk()
         every { myDonation.money } returns 1000.0
+        this.myGenerousDonation = mockk()
+        every { myGenerousDonation.money} returns 100000.0
 
         this.myListOfDonations = mutableListOf()
         this.myListOfDonations.add(this.myDonation)
-        this.myProjectByDefault = myProjectBuilder.build()
         this.myUser = mockk()
         every { myUser.earnPoints(1000.0)} just Runs
+        every { myUser.earnPoints(100000.0)} just Runs
         every { myUser.addDonation(myDonation) } just Runs
+        every { myUser.addDonation(myGenerousDonation)} just Runs
+
     }
 
     @Test
@@ -111,15 +123,19 @@ class TestProject {
 
     @Test
     fun whenAProjectByDefaultHaveAPopulationOfOneHundredThenTheMinimumBudgetIsOneHundredThousand() {
-        Assert.assertTrue(myProjectByDefault.minimumBudget(100).equals(100000.0))
+        val myLocation = myLocationBuilder.withPopulation(100).build()
+        val myProjectByDefault = myProjectBuilder.withLocation(myLocation).build()
+        Assert.assertTrue(myProjectByDefault.minimumBudget().equals(100000.0))
     }
 
     @Test
     fun whenAProjectWithACustomMoneyFactorOf2000AndPopulationOf1500ThenTheMinimumBudgetIs3000000() {
+        val myLocation = myLocationBuilder.withPopulation(1500).build()
         val myProjectWithDoubleMoneyFactor = myProjectBuilder
                 .withMoneyFactor(2000.0)
+                .withLocation(myLocation)
                 .build()
-        Assert.assertTrue(myProjectWithDoubleMoneyFactor.minimumBudget(1500).equals(3000000.0))
+        Assert.assertTrue(myProjectWithDoubleMoneyFactor.minimumBudget().equals(3000000.0))
     }
 
     @Test
@@ -131,16 +147,24 @@ class TestProject {
 
     @Test
     fun whenAProjectWithMoneyFactorOf1000AndPopulationOf100ReceivesADonationOf1000ThenTheNeededBudgetIs99000() {
+        val myLocation = myLocationBuilder.withPopulation(100).build()
+        val myProjectByDefault = myProjectBuilder.withLocation(myLocation).build()
         this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myDonation)
-        Assert.assertTrue(myProjectByDefault.neededBudget(100).equals(99000.0))
+        Assert.assertTrue(myProjectByDefault.neededBudget().equals(99000.0))
     }
-/*when a project does not reach the budget needed yet, then its completion status is false
 
- */
     @Test
-    fun whenAProjectIsRecentlyCreatedThenHisFinishedStatusIsFalse() {
+    fun whenAProjectIsRecentlyCreatedThenHisFinishedStatusByDefaultIsFalse() {
         Assert.assertFalse(this.myProjectByDefault.isFinished)
     }
 
-    //ToDo: test finishProject
+    @Test
+    fun whenAProjectDoesReachTheBudgetNeededAndTheFinishDateThenItsFinishedStatusIsTrue() {
+        val myFinishedProject = myProjectBuilder
+                .withBeginningDate(myGoodBeginningDate)
+                .withFinishDate(myGoodFinishDate)
+                .build()
+        myFinishedProject.receiveDonationFrom(myUser, myGenerousDonation)
+        myFinishedProject.finishProject()
+    }
 }

@@ -43,6 +43,11 @@ class ProjectBuilder {
         return this
     }
 
+    fun withLocation(location: Location): ProjectBuilder {
+        this.location = location
+        return this
+    }
+
     fun withMinPercentage(minPercentage: Int): ProjectBuilder {
         this.minPercentage = minPercentage
         return this

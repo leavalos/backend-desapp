@@ -13,8 +13,8 @@ import org.mockito.Mockito.`when`
 
 class TestLocation {
 
-    lateinit var myLocation: Location
-    lateinit var myProject: Project
+    private lateinit var myLocation: Location
+    private lateinit var myProject: Project
 
     @Before
     fun setUp() {
@@ -39,7 +39,7 @@ class TestLocation {
 
     @Test fun testMinimumBudget() {
         val mockProject = Mockito.mock(Project::class.java)
-        `when`(mockProject.minimumBudget(this.myLocation.population)).thenReturn(300000.00)
+        `when`(mockProject.minimumBudget()).thenReturn(300000.00)
 
         this.myLocation.assignProject(mockProject)
         Assert.assertEquals(this.myLocation.minimumBudget(), 300000.00, 0.1 )
@@ -47,7 +47,7 @@ class TestLocation {
 
     @Test fun testNeededBudget() {
         val mockProject = Mockito.mock(Project::class.java)
-        `when`(mockProject.neededBudget(this.myLocation.population)).thenReturn(300000.00)
+        `when`(mockProject.neededBudget()).thenReturn(300000.00)
 
         this.myLocation.assignProject(mockProject)
         Assert.assertEquals(this.myLocation.neededBudget(), 300000.00, 0.1 )
