@@ -5,7 +5,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.User
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -166,5 +166,28 @@ class TestProject {
                 .build()
         myFinishedProject.receiveDonationFrom(myUser, myGenerousDonation)
         myFinishedProject.finishProject()
+        Assert.assertTrue(myFinishedProject.isFinished)
     }
+
+    @Test (expected = TheFinishDateOfTheProjectHasNotPassedYetException::class)
+    fun whenFinishDateHasNotPassedAndTheAdminWantsToFinishProjectAnywayThenThrowsAnException() {
+        val myProjectThatNotReachFinishDate = myProjectBuilder
+                .withBeginningDate(myGoodBeginningDate)
+                .withFinishDate(LocalDate.of(2020, 12,25))
+                .build()
+        myProjectThatNotReachFinishDate.receiveDonationFrom(myUser, myGenerousDonation)
+        myProjectThatNotReachFinishDate.finishProject()
+    }
+
+    @Test (expected = TheNeededBudgetOfTheProjectIsNotCompletedYetException::class)
+    fun whenNeededBudgetHasNotReachedAndTheAdminWantsToFinishProjectAnywayThenThrowsAnException() {
+        val myProjectThatNotReachNeededBudget = myProjectBuilder
+                .withBeginningDate(myGoodBeginningDate)
+                .withFinishDate(myGoodFinishDate)
+                .build()
+        println(myProjectThatNotReachNeededBudget.neededBudget()) //Error: result is 0.0
+        myProjectThatNotReachNeededBudget.finishProject()
+    }
+    //ToDo: Quiere finalizar el proyecto pero no llego al presupuesto necesario.
+
 }

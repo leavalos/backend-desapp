@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import java.time.LocalDate
 
 class Project {
