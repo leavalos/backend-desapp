@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveDonationPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveRootPrivilege
+import java.time.LocalDate
 
 abstract class User {
 
@@ -64,6 +65,11 @@ abstract class User {
 
     open fun madeDonations() : MutableList<Donation> {
         throw DoNotHaveDonationPrivilege()
+    }
+
+    open fun createProject(name : String, moneyFactor: Double, beginningDate : LocalDate,
+                           finishDate : LocalDate, minPercentage: Int)  : Project {
+        throw DoNotHaveRootPrivilege()
     }
 
 

@@ -1,6 +1,7 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import java.time.LocalDate
 
 class Project {
@@ -11,10 +12,10 @@ class Project {
     private var beginningDate: LocalDate
     private var finishDate: LocalDate
     var isFinished: Boolean
-    private var location: Location
+    var population : Int
     var minPercentageToFinish: Int
 
-    constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate, location: Location) {
+    constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate) {
         this.verifyName(name)
         this.name = name
         this.donations = mutableListOf()
@@ -22,7 +23,7 @@ class Project {
         this.beginningDate = beginningDate
         this.finishDate = finishDate
         this.isFinished = false
-        this.location = location
+        this.population = 0
         this.minPercentageToFinish = 100
     }
 
@@ -31,9 +32,7 @@ class Project {
             moneyFactor: Double,
             beginningDate: LocalDate,
             finishDate: LocalDate,
-            location: Location,
-            minPercentage: Int,
-            donations: MutableList<Donation>) {
+            minPercentage: Int) {
         this.verifyParameters(name, moneyFactor, minPercentage, beginningDate, finishDate)
         this.name = name
         this.donations = mutableListOf()
@@ -41,10 +40,8 @@ class Project {
         this.beginningDate = beginningDate
         this.finishDate = finishDate
         this.isFinished = false
-        this.location = location
         this.minPercentageToFinish = minPercentage
-        this.donations = donations
-        this.isFinished = false
+        this.population = 0
     }
 
     fun name() : String {
@@ -53,10 +50,6 @@ class Project {
 
     fun donations() : MutableList<Donation> {
         return this.donations
-    }
-
-    fun isFinished() : Boolean {
-        return this.isFinished
     }
 
     private fun verifyParameters(
@@ -135,7 +128,7 @@ class Project {
     }
 
     fun minimumBudget(): Double {
-        return this.location.population * this.moneyFactor
+        return this.population * this.moneyFactor
     }
 
     fun actualBudget(): Double {

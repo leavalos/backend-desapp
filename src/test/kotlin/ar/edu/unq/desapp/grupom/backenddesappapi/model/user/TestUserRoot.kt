@@ -43,13 +43,13 @@ class TestUserRoot {
     @Test
     fun testFinishProject() {
 
-        Assert.assertFalse(this.myProject.isFinished())
+        Assert.assertFalse(this.myProject.isFinished)
 
         this.myLocation.assignProject(this.myProject)
 
         this.myUser.finishProject(this.myLocation)
 
-        Assert.assertTrue(this.myProject.isFinished())
+        Assert.assertTrue(this.myProject.isFinished)
     }
 
     @Test
