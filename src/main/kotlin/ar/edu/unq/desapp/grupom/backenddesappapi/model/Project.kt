@@ -44,6 +44,19 @@ class Project {
         this.location = location
         this.minPercentageToFinish = minPercentage
         this.donations = donations
+        this.isFinished = false
+    }
+
+    fun name() : String {
+        return this.name
+    }
+
+    fun donations() : MutableList<Donation> {
+        return this.donations
+    }
+
+    fun isFinished() : Boolean {
+        return this.isFinished
     }
 
     private fun verifyParameters(

@@ -5,9 +5,9 @@ class Location {
 
     private var name:String
     private var province:Province
-    var population: Int
+    private var population: Int
     private var hasConnection: Boolean
-    var project: Project?
+    private var project: Project?
 
     constructor(name:String, province:Province, population:Int, hasConnection:Boolean){
         this.name = name
@@ -25,6 +25,29 @@ class Location {
         this.project = project
     }
 
+    fun name() : String {
+        return this.name
+    }
+
+    fun pronvince() : Province {
+        return this.province
+    }
+
+    fun population() : Int {
+        return this.population
+    }
+
+    fun hasConnection() : Boolean {
+        return this.hasConnection
+    }
+
+    fun project() : Project? {
+        return this.project
+    }
+
+    fun changeConnectionState() {
+        this.hasConnection = !this.hasConnection
+    }
 
     fun assignProject(project: Project) {
         this.project = project
@@ -32,11 +55,11 @@ class Location {
 
 
     fun neededBudget() : Double {
-        return this.project!!.neededBudget()
+        return this.project()!!.neededBudget(this.population)
     }
 
     fun minimumBudget() : Double {
-        return this.project!!.minimumBudget()
+        return this.project()!!.minimumBudget(this.population)
     }
 
 }
