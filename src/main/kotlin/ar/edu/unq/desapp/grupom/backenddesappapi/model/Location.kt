@@ -56,11 +56,11 @@ class Location {
 
 
     fun neededBudget() : Double {
-        return this.project()!!.neededBudget()
+        return this.project!!.totalBudgedRequired()
     }
 
     fun minimumBudget() : Double {
-        return this.project()!!.minimumBudget()
+        return this.project!!.neededBudget()
     }
 
 }

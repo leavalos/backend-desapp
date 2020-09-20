@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import java.time.LocalDate
 
 class Project {
@@ -12,10 +13,10 @@ class Project {
     private var beginningDate: LocalDate
     private var finishDate: LocalDate
     var isFinished: Boolean
-    var population : Int
+    private var population: Int
     var minPercentageToFinish: Int
 
-    constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate) {
+    constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate, population: Int) {
         this.verifyName(name)
         this.name = name
         this.donations = mutableListOf()
@@ -23,7 +24,7 @@ class Project {
         this.beginningDate = beginningDate
         this.finishDate = finishDate
         this.isFinished = false
-        this.population = 0
+        this.population = population
         this.minPercentageToFinish = 100
     }
 
@@ -32,6 +33,7 @@ class Project {
             moneyFactor: Double,
             beginningDate: LocalDate,
             finishDate: LocalDate,
+            population: Int,
             minPercentage: Int) {
         this.verifyParameters(name, moneyFactor, minPercentage, beginningDate, finishDate)
         this.name = name
@@ -40,8 +42,9 @@ class Project {
         this.beginningDate = beginningDate
         this.finishDate = finishDate
         this.isFinished = false
+        this.population = population
         this.minPercentageToFinish = minPercentage
-        this.population = 0
+        this.donations = mutableListOf()
     }
 
     fun name() : String {
@@ -57,8 +60,7 @@ class Project {
             moneyFactor: Double,
             minPercentage: Int,
             beginningDate: LocalDate,
-            finishDate: LocalDate)
-    {
+            finishDate: LocalDate) {
         verifyName(name)
         verifyMoneyFactor(moneyFactor)
         verifyMinPercentage(minPercentage)
@@ -123,17 +125,18 @@ class Project {
         return donation.money
     }
 
-    fun neededBudget() : Double {
-        return this.minimumBudget() - this.actualBudget()
-    }
 
-    fun minimumBudget(): Double {
-        return this.population * this.moneyFactor
-    }
+    fun totalBudgedRequired(): Double = this.population * this.moneyFactor
 
-    fun actualBudget(): Double {
-        return donations.map { d -> d.money }.sum()
-    }
+    fun minimumBudgetToFinish(): Double {
+    return totalBudgedRequired() * this.percentage()
+}
+
+    fun percentage() = this.minPercentageToFinish / 100
+
+    fun budgetCollected(): Double = donations.map { d -> d.money }.sum()
+
+    fun neededBudget(): Double  = minimumBudgetToFinish() - budgetCollected()
 
     fun finishProject() {
         this.verifyNeededBudgetCompleted()

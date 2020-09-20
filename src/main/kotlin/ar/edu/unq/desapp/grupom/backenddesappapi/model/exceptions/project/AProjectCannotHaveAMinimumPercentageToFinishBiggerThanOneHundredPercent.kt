@@ -1,4 +1,4 @@
-package ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions
+package ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project
 
 class AProjectCannotHaveAMinimumPercentageToFinishBiggerThanOneHundredPercent(
         override val message: String? =
