@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model.project
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.builders.LocationBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
@@ -17,43 +16,72 @@ import java.time.LocalDate
 
 class TestProject {
 
-    private lateinit var myBadFinishDate: LocalDate
-    private lateinit var myBadBeginningDate: LocalDate
+    private lateinit var myProjectReadyToBeFinished: Project
+    private lateinit var myProjectWithDoubleMoneyFactor: Project
+    private lateinit var myProjectWithPopulationOfOneHundred: Project
+    private lateinit var myProjectThatNotReachFinishDate: Project
+    private lateinit var myProjectThatNotReachNeededBudget: Project
+    private lateinit var august: LocalDate
+    private lateinit var september: LocalDate
     private lateinit var myProjectBuilder: ProjectBuilder
     private lateinit var myProjectByDefault: Project
-    private lateinit var myLocationBuilder: LocationBuilder
     private lateinit var myListOfDonations: MutableList<Donation>
-    private lateinit var myDonation: Donation
-    private lateinit var myGenerousDonation: Donation
+    private lateinit var myNormalDonation: Donation
+    private lateinit var myBigDonation: Donation
     private lateinit var myUser: User
-    private lateinit var myGoodBeginningDate: LocalDate
-    private lateinit var myGoodFinishDate: LocalDate
-
+    private lateinit var june: LocalDate
+    private lateinit var july: LocalDate
+    private lateinit var december: LocalDate
 
     @Before
     fun setUp(){
-        this.myBadBeginningDate = LocalDate.of(2020, 9, 15)
-        this.myBadFinishDate = LocalDate.of(2020, 8, 15)
-        this.myGoodBeginningDate = LocalDate.of(2020, 6, 1)
-        this.myGoodFinishDate = LocalDate.of(2020, 8, 30)
+        june = LocalDate.of(2020, 6, 1)
+        july = LocalDate.of(2020, 7, 1)
+        august = LocalDate.of(2020, 8, 1)
+        september = LocalDate.of(2020, 9, 1)
+        december = LocalDate.of(2020, 12,25)
 
-        this.myLocationBuilder = LocationBuilder.location().withPopulation(100)
-        this.myProjectBuilder = ProjectBuilder.project()
-        this.myProjectByDefault = myProjectBuilder.build()
+        myProjectBuilder = ProjectBuilder.project()
+        myProjectByDefault = myProjectBuilder.build()
 
-        this.myDonation = mockk()
-        every { myDonation.money } returns 1000.0
-        this.myGenerousDonation = mockk()
-        every { myGenerousDonation.money} returns 100000.0
+        myNormalDonation = mockk()
+        every { myNormalDonation.money } returns 1000.0
+        myBigDonation = mockk()
+        every { myBigDonation.money} returns 100000.0
 
-        this.myListOfDonations = mutableListOf()
-        this.myListOfDonations.add(this.myDonation)
-        this.myUser = mockk()
+        myListOfDonations = mutableListOf()
+        myListOfDonations.add(this.myNormalDonation)
+        myUser = mockk()
         every { myUser.earnPoints(1000.0)} just Runs
         every { myUser.earnPoints(100000.0)} just Runs
-        every { myUser.addDonation(myDonation) } just Runs
-        every { myUser.addDonation(myGenerousDonation)} just Runs
+        every { myUser.addDonation(myNormalDonation) } just Runs
+        every { myUser.addDonation(myBigDonation)} just Runs
 
+        myProjectThatNotReachNeededBudget = myProjectBuilder
+                .withBeginningDate(june)
+                .withFinishDate(july)
+                .withPopulation(100)
+                .build()
+
+        myProjectThatNotReachFinishDate = myProjectBuilder
+                .withBeginningDate(june)
+                .withFinishDate(december)
+                .build()
+        myProjectThatNotReachFinishDate.receiveDonationFrom(myUser, myBigDonation)
+
+        myProjectWithPopulationOfOneHundred = myProjectBuilder.withPopulation(100).build()
+
+        myProjectReadyToBeFinished = myProjectBuilder
+                .withBeginningDate(june)
+                .withFinishDate(september)
+                .withPopulation(100)
+                .build()
+        myProjectReadyToBeFinished.receiveDonationFrom(myUser, myBigDonation)
+
+        myProjectWithDoubleMoneyFactor = myProjectBuilder
+                .withMoneyFactor(2000.0)
+                .withPopulation(100)
+                .build()
     }
 
     @Test
@@ -103,8 +131,8 @@ class TestProject {
 
     @Test(expected = AProjectCannotHaveABeginningDateAfterFinishDateException::class)
     fun whenAProjectIsCreatedWithBeginningDateAfterTheFinishDateThenThrowsAnException() {
-        myProjectBuilder.withBeginningDate(myBadBeginningDate)
-                .withFinishDate(myBadFinishDate)
+        myProjectBuilder.withBeginningDate(september)
+                .withFinishDate(august)
                 .build()
     }
 
@@ -114,43 +142,29 @@ class TestProject {
     }
 
     @Test
-    fun whenAProjectIsCreatedWithAListOfDonationsThenTheProjectHaveThatListOfDonations() {
-        val myProjectWithDonations = myProjectBuilder
-                .withDonations(this.myListOfDonations)
-                .build()
-        Assert.assertEquals(this.myListOfDonations, myProjectWithDonations.donations)
+    fun whenAProjectHaveAPopulationOf100AndMoneyFactorOf1000ThenTheMinimumBudgetIs100000() {
+        Assert.assertTrue(myProjectWithPopulationOfOneHundred.neededBudget().equals(100000.0))
     }
 
     @Test
-    fun whenAProjectByDefaultHaveAPopulationOfOneHundredThenTheMinimumBudgetIsOneHundredThousand() {
-        val myLocation = myLocationBuilder.withPopulation(100).build()
-        val myProjectByDefault = myProjectBuilder.withLocation(myLocation).build()
-        Assert.assertTrue(myProjectByDefault.minimumBudget().equals(100000.0))
-    }
-
-    @Test
-    fun whenAProjectWithACustomMoneyFactorOf2000AndPopulationOf1500ThenTheMinimumBudgetIs3000000() {
-        val myLocation = myLocationBuilder.withPopulation(1500).build()
-        val myProjectWithDoubleMoneyFactor = myProjectBuilder
-                .withMoneyFactor(2000.0)
-                .withLocation(myLocation)
-                .build()
-        Assert.assertTrue(myProjectWithDoubleMoneyFactor.minimumBudget().equals(3000000.0))
+    fun whenAProjectWithACustomMoneyFactorOf2000AndPopulationOf100ThenTheMinimumBudgetIs200000() {
+        Assert.assertTrue(
+                myProjectWithDoubleMoneyFactor
+                        .minimumBudgetToFinish().equals(200000.0)
+        )
     }
 
     @Test
     fun whenAProjectWithMoneyFactorOf1000AndPopulationOf100ReceivesADonationOf1000ThenTheActualBudgetIs1000() {
-        this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myDonation)
-        Assert.assertTrue(myProjectByDefault.actualBudget().equals(1000.0))
+        this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myNormalDonation)
+        Assert.assertTrue(myProjectByDefault.budgetCollected().equals(1000.0))
     }
 
 
     @Test
     fun whenAProjectWithMoneyFactorOf1000AndPopulationOf100ReceivesADonationOf1000ThenTheNeededBudgetIs99000() {
-        val myLocation = myLocationBuilder.withPopulation(100).build()
-        val myProjectByDefault = myProjectBuilder.withLocation(myLocation).build()
-        this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myDonation)
-        Assert.assertTrue(myProjectByDefault.neededBudget().equals(99000.0))
+        myProjectWithPopulationOfOneHundred.receiveDonationFrom(this.myUser, this.myNormalDonation)
+        Assert.assertTrue(myProjectWithPopulationOfOneHundred.neededBudget().equals(99000.0))
     }
 
     @Test
@@ -160,34 +174,17 @@ class TestProject {
 
     @Test
     fun whenAProjectDoesReachTheBudgetNeededAndTheFinishDateThenItsFinishedStatusIsTrue() {
-        val myFinishedProject = myProjectBuilder
-                .withBeginningDate(myGoodBeginningDate)
-                .withFinishDate(myGoodFinishDate)
-                .build()
-        myFinishedProject.receiveDonationFrom(myUser, myGenerousDonation)
-        myFinishedProject.finishProject()
-        Assert.assertTrue(myFinishedProject.isFinished)
+        this.myProjectReadyToBeFinished.finishProject()
+        Assert.assertTrue(this.myProjectReadyToBeFinished.isFinished)
     }
 
     @Test (expected = TheFinishDateOfTheProjectHasNotPassedYetException::class)
     fun whenFinishDateHasNotPassedAndTheAdminWantsToFinishProjectAnywayThenThrowsAnException() {
-        val myProjectThatNotReachFinishDate = myProjectBuilder
-                .withBeginningDate(myGoodBeginningDate)
-                .withFinishDate(LocalDate.of(2020, 12,25))
-                .build()
-        myProjectThatNotReachFinishDate.receiveDonationFrom(myUser, myGenerousDonation)
         myProjectThatNotReachFinishDate.finishProject()
     }
 
     @Test (expected = TheNeededBudgetOfTheProjectIsNotCompletedYetException::class)
     fun whenNeededBudgetHasNotReachedAndTheAdminWantsToFinishProjectAnywayThenThrowsAnException() {
-        val myProjectThatNotReachNeededBudget = myProjectBuilder
-                .withBeginningDate(myGoodBeginningDate)
-                .withFinishDate(myGoodFinishDate)
-                .build()
-        println(myProjectThatNotReachNeededBudget.neededBudget()) //Error: result is 0.0
         myProjectThatNotReachNeededBudget.finishProject()
     }
-    //ToDo: Quiere finalizar el proyecto pero no llego al presupuesto necesario.
-
 }

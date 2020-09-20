@@ -1,7 +1,5 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.builders
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import java.time.LocalDate
 
@@ -9,10 +7,9 @@ class ProjectBuilder {
 
     private var name:String = "MyFakeProject"
     private var moneyFactor: Double = 1000.0
-    private var donations:MutableList<Donation> = mutableListOf()
     private var beginningDate: LocalDate = LocalDate.of(2020, 9, 30)
     private var finishDate: LocalDate = LocalDate.of(2020, 10, 30)
-    private var location: Location = LocationBuilder.location().build()
+    private var population: Int = 0
     private var minPercentage: Int = 100
 
     companion object {
@@ -24,8 +21,7 @@ class ProjectBuilder {
 
     fun build(): Project {
 
-        return Project(this.name, moneyFactor, beginningDate, finishDate, location, minPercentage,
-                donations)
+        return Project(this.name, moneyFactor, beginningDate, finishDate, population, minPercentage)
     }
 
     fun withName(aName:String): ProjectBuilder {
@@ -33,18 +29,14 @@ class ProjectBuilder {
         return this
     }
 
-    fun withDonations(donations: MutableList<Donation>): ProjectBuilder {
-        this.donations = donations
-        return this
-    }
 
     fun withMoneyFactor(moneyFactor: Double): ProjectBuilder {
         this.moneyFactor = moneyFactor
         return this
     }
 
-    fun withLocation(location: Location): ProjectBuilder {
-        this.location = location
+    fun withPopulation(population: Int): ProjectBuilder {
+        this.population = population
         return this
     }
 
