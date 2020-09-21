@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 class Donation {
 
+
     var money: Double
     var comment: String
     var nickname: String
@@ -27,6 +28,9 @@ class Donation {
         this.projectName = projectName
     }
 
-
+    fun hasBeenMadeInTheCurrentMonth() : Boolean {
+        var currentMonth = LocalDateTime.now().month
+        return this.date.month.equals(currentMonth)
+    }
 
 }

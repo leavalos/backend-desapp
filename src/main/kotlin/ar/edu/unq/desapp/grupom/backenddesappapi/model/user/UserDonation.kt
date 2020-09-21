@@ -34,4 +34,8 @@ class UserDonation : User {
         return this.madeDonations
     }
 
+    override fun madeMoreThanTwoDonationsInThisMonth(): Boolean {
+        return 2 <= this.madeDonations.filter { donation ->  donation.hasBeenMadeInTheCurrentMonth()}.size
+    }
+
 }

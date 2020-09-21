@@ -117,8 +117,8 @@ class Project {
     fun receiveDonationFrom(user: User, donation: Donation) {
         verifyProjectIsNotFinished()
         this.donations.add(donation)
-        user.earnPoints(this.pointsEarnedWithDonation(donation))
         user.addDonation(donation)
+        user.earnPoints(this.pointsEarnedWithDonation(donation, user))
     }
 
     private fun verifyProjectIsNotFinished() {
@@ -127,13 +127,26 @@ class Project {
         }
     }
 
-    private fun pointsEarnedWithDonation(donation: Donation): Double {
-        //Needs to be implemented
-        return donation.money
+    private fun pointsEarnedWithDonation(donation: Donation, user: User): Double {
+        var points  = 00.00
+        if (donation.money >= 1000) {
+            points += donation.money.toInt()
+        }
+        if (this.population() < 2000) {
+            points += points
+        }
+        if (user.madeMoreThanTwoDonationsInThisMonth()) {
+            points += 500
+        }
+        return points
+    }
+
+    fun population() : Int {
+        return this.population
     }
 
 
-    fun totalBudgedRequired(): Double = this.population * this.moneyFactor
+    fun totalBudgedRequired(): Double = this.population() * this.moneyFactor
 
     fun minimumBudgetToFinish(): Double {
         return totalBudgedRequired() * this.percentage()
