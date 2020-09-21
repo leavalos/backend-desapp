@@ -4,8 +4,8 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.builders.LocationBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just

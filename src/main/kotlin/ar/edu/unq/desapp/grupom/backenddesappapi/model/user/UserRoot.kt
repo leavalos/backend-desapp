@@ -21,9 +21,7 @@ class UserRoot : User {
     override fun createProject(name : String, moneyFactor: Double, beginningDate : LocalDate,
                                 finishDate : LocalDate, minPercentage: Int) : Project {
 
-        var project = Project(name, moneyFactor, beginningDate, finishDate, minPercentage)
-
-        return project
+        return Project(name, moneyFactor, beginningDate, finishDate, 0, minPercentage)
     }
 
 

@@ -129,8 +129,8 @@ class Project {
     fun totalBudgedRequired(): Double = this.population * this.moneyFactor
 
     fun minimumBudgetToFinish(): Double {
-    return totalBudgedRequired() * this.percentage()
-}
+        return totalBudgedRequired() * this.percentage()
+    }
 
     fun percentage() = this.minPercentageToFinish / 100
 
@@ -154,6 +154,10 @@ class Project {
         if (this.neededBudget() > 0.00) {
             throw TheNeededBudgetOfTheProjectIsNotCompletedYetException()
         }
+    }
+
+    fun setPopulation(population: Int) {
+        this.population = population
     }
 
 }

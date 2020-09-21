@@ -51,7 +51,7 @@ class Location {
 
     fun assignProject(project: Project) {
         this.project = project
-        project.population = this.population
+        project.setPopulation(this.population)
     }
 
 
