@@ -115,9 +115,16 @@ class Project {
 
 
     fun receiveDonationFrom(user: User, donation: Donation) {
+        verifyProjectIsNotFinished()
         this.donations.add(donation)
         user.earnPoints(this.pointsEarnedWithDonation(donation))
         user.addDonation(donation)
+    }
+
+    private fun verifyProjectIsNotFinished() {
+        if (this.isFinished) {
+            throw CannotMakeADonationToAFinishedProjectException()
+        }
     }
 
     private fun pointsEarnedWithDonation(donation: Donation): Double {
@@ -132,7 +139,7 @@ class Project {
         return totalBudgedRequired() * this.percentage()
     }
 
-    fun percentage() = this.minPercentageToFinish / 100
+    private fun percentage() = this.minPercentageToFinish / 100
 
     fun budgetCollected(): Double = donations.map { d -> d.money }.sum()
 

@@ -17,6 +17,7 @@ import java.time.LocalDate
 
 class TestProject {
 
+    private lateinit var myFinishedProject: Project
     private lateinit var myProjectReadyToBeFinished: Project
     private lateinit var myProjectWithDoubleMoneyFactor: Project
     private lateinit var myProjectWithPopulationOfOneHundred: Project
@@ -78,6 +79,14 @@ class TestProject {
                 .withPopulation(100)
                 .build()
         myProjectReadyToBeFinished.receiveDonationFrom(myUser, myBigDonation)
+
+        myFinishedProject = myProjectBuilder
+                .withBeginningDate(june)
+                .withFinishDate(august)
+                .withPopulation(100)
+                .build()
+        myFinishedProject.receiveDonationFrom(myUser, myBigDonation)
+        myFinishedProject.finishProject()
 
         myProjectWithDoubleMoneyFactor = myProjectBuilder
                 .withMoneyFactor(2000.0)
@@ -174,7 +183,7 @@ class TestProject {
     }
 
     @Test
-    fun whenAProjectDoesReachTheBudgetNeededAndTheFinishDateThenItsFinishedStatusIsTrue() {
+    fun whenAProjectIsFinishedThenItsFinishedStatusIsTrue() {
         this.myProjectReadyToBeFinished.finishProject()
         Assert.assertTrue(this.myProjectReadyToBeFinished.isFinished)
     }
@@ -187,5 +196,10 @@ class TestProject {
     @Test (expected = TheNeededBudgetOfTheProjectIsNotCompletedYetException::class)
     fun whenNeededBudgetHasNotReachedAndTheAdminWantsToFinishProjectAnywayThenThrowsAnException() {
         myProjectThatNotReachNeededBudget.finishProject()
+    }
+
+    @Test (expected = CannotMakeADonationToAFinishedProjectException::class)
+    fun whenADonationIsMadeToAProjectThatIsFinishedThenItThrowsAnException() {
+        myFinishedProject.receiveDonationFrom(myUser, myNormalDonation)
     }
 }
