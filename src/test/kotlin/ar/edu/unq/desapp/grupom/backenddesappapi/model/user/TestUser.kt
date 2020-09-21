@@ -50,7 +50,7 @@ class TestUser {
 
     @Test
     fun TestIsMail() {
-        Assert.assertFalse(this.myUser.isEmail("invalidEmail"))
+        Assert.assertFalse(this.myUser.isEmail("invalidEmail1234"))
         Assert.assertTrue(this.myUser.isEmail("validEmail@gmail.com"))
     }
 
