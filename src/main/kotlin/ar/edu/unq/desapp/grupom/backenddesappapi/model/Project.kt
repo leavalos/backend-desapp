@@ -9,8 +9,8 @@ class Project {
     var name: String
     var donations: MutableList<Donation>
     var moneyFactor: Double
-    private var beginningDate: LocalDate
-    private var finishDate: LocalDate
+    var beginningDate: LocalDate
+    var finishDate: LocalDate
     var isFinished: Boolean
     private var population: Int
     var minPercentageToFinish: Int

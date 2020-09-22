@@ -11,7 +11,11 @@ class UserRoot : User {
     constructor(mail:String, password:String, nickName:String): super(mail, password, nickName)
 
     override fun finishProject(location: Location) {
-        location.project()?.finishProject()
+        try {
+            location.project()?.finishProject()
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
     override fun addProject(location: Location, project: Project) {

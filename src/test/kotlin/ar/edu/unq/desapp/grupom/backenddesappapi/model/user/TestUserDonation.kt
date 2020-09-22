@@ -6,7 +6,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.UserBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveRootPrivilege
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
