@@ -2,7 +2,6 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveDonationPrivilege
 import java.time.LocalDateTime
 
 class UserDonation : User {
@@ -35,7 +34,11 @@ class UserDonation : User {
     }
 
     override fun madeOneDonationInThisMonth(): Boolean {
-        return 1 <= this.madeDonations.count { donation -> donation.hasBeenMadeInTheCurrentMonth()}
+        return this.countDonationsMadeInThisMonth() == 1
+    }
+
+    private fun countDonationsMadeInThisMonth(): Int {
+        return this.madeDonations.count { donation -> donation.hasBeenMadeInTheCurrentMonth() }
     }
 
 }
