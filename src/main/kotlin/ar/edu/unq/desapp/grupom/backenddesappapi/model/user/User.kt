@@ -3,10 +3,10 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveDonationPrivilege
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveRootPrivilege
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
 import java.time.LocalDate
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.InvalidEmailException
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
 import java.util.regex.Pattern.compile
 
 abstract class User {

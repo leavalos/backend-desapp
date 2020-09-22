@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import java.time.LocalDateTime
-
 class UserDonation : User {
 
     var points: Double = 00.00

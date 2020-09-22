@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.UserBuilder
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.InvalidEmailException
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
