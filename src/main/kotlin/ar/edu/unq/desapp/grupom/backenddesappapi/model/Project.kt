@@ -117,8 +117,8 @@ class Project {
     fun receiveDonationFrom(user: User, donation: Donation) {
         verifyProjectIsNotFinished()
         this.donations.add(donation)
-        user.addDonation(donation)
         user.earnPoints(this.pointsEarnedWithDonation(donation, user))
+        user.addDonation(donation)
     }
 
     private fun verifyProjectIsNotFinished() {
@@ -127,9 +127,10 @@ class Project {
         }
     }
 
+
     private fun pointsEarnedWithDonation(donation: Donation, user: User): Double {
         var points  = 00.00
-        if (donation.money >= 1000) {
+        if (donation.money > 1000) {
             points += donation.money.toInt()
         }
         if (this.population() < 2000) {

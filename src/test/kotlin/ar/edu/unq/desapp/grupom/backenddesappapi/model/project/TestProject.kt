@@ -5,6 +5,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -20,6 +21,7 @@ class TestProject {
     private lateinit var myProjectReadyToBeFinished: Project
     private lateinit var myProjectWithDoubleMoneyFactor: Project
     private lateinit var myProjectWithPopulationOfOneHundred: Project
+    private lateinit var myProjectWithPopulationOfTwoThousand: Project
     private lateinit var myProjectThatNotReachFinishDate: Project
     private lateinit var myProjectThatNotReachNeededBudget: Project
     private lateinit var august: LocalDate
@@ -27,9 +29,11 @@ class TestProject {
     private lateinit var myProjectBuilder: ProjectBuilder
     private lateinit var myProjectByDefault: Project
     private lateinit var myListOfDonations: MutableList<Donation>
-    private lateinit var myNormalDonation: Donation
-    private lateinit var myBigDonation: Donation
-    private lateinit var myUser: User
+    private lateinit var myNormalMockedDonation: Donation
+    private lateinit var myBigMockedDonation: Donation
+    private lateinit var myTwoThousandDonation: Donation
+    private lateinit var myMockedUser: User
+    private lateinit var myRealUser: User
     private lateinit var june: LocalDate
     private lateinit var july: LocalDate
     private lateinit var december: LocalDate
@@ -45,21 +49,22 @@ class TestProject {
         myProjectBuilder = ProjectBuilder.project()
         myProjectByDefault = myProjectBuilder.build()
 
-        myNormalDonation = mockk()
-        every { myNormalDonation.money } returns 1000.0
-        myBigDonation = mockk()
-        every { myBigDonation.money} returns 100000.0
+        myNormalMockedDonation = mockk()
+        every { myNormalMockedDonation.money } returns 1000.0
+        myBigMockedDonation = mockk()
+        every { myBigMockedDonation.money } returns 100000.0
+
+        myTwoThousandDonation = Donation(2000.0, "A donation with an amount of two thousand ($2000)", "John",
+                myProjectByDefault.name)
 
         myListOfDonations = mutableListOf()
-        myListOfDonations.add(this.myNormalDonation)
-        myUser = mockk()
-        every { myUser.earnPoints(1000.0)} just Runs
-        every { myUser.earnPoints(100000.0)} just Runs
-        every { myUser.addDonation(myNormalDonation) } just Runs
-        every { myUser.addDonation(myBigDonation)} just Runs
-        every { myUser.madeMoreThanTwoDonationsInThisMonth()} returns false
-        every { myUser.earnPoints(200000.0)} just Runs
-        every { myUser.earnPoints(2000.0)} just Runs
+        myListOfDonations.add(this.myNormalMockedDonation)
+        myMockedUser = mockk()
+        every { myMockedUser.addDonation(any()) } just Runs
+        every { myMockedUser.madeMoreThanTwoDonationsInThisMonth()} returns false
+        every { myMockedUser.earnPoints(any())} just Runs
+
+        myRealUser = UserDonation("un_correo@email.com", "pass123", "John")
 
         myProjectThatNotReachNeededBudget = myProjectBuilder
                 .withBeginningDate(june)
@@ -71,23 +76,24 @@ class TestProject {
                 .withBeginningDate(june)
                 .withFinishDate(december)
                 .build()
-        myProjectThatNotReachFinishDate.receiveDonationFrom(myUser, myBigDonation)
+        myProjectThatNotReachFinishDate.receiveDonationFrom(myMockedUser, myBigMockedDonation)
 
         myProjectWithPopulationOfOneHundred = myProjectBuilder.withPopulation(100).build()
+        myProjectWithPopulationOfTwoThousand = myProjectBuilder.withPopulation(2000).build()
 
         myProjectReadyToBeFinished = myProjectBuilder
                 .withBeginningDate(june)
                 .withFinishDate(september)
                 .withPopulation(100)
                 .build()
-        myProjectReadyToBeFinished.receiveDonationFrom(myUser, myBigDonation)
+        myProjectReadyToBeFinished.receiveDonationFrom(myMockedUser, myBigMockedDonation)
 
         myFinishedProject = myProjectBuilder
                 .withBeginningDate(june)
                 .withFinishDate(august)
                 .withPopulation(100)
                 .build()
-        myFinishedProject.receiveDonationFrom(myUser, myBigDonation)
+        myFinishedProject.receiveDonationFrom(myMockedUser, myBigMockedDonation)
         myFinishedProject.finishProject()
 
         myProjectWithDoubleMoneyFactor = myProjectBuilder
@@ -168,14 +174,15 @@ class TestProject {
 
     @Test
     fun whenAProjectWithMoneyFactorOf1000AndPopulationOf100ReceivesADonationOf1000ThenTheActualBudgetIs1000() {
-        this.myProjectByDefault.receiveDonationFrom(this.myUser, this.myNormalDonation)
-        Assert.assertTrue(myProjectByDefault.budgetCollected().equals(1000.0))
+        this.myProjectWithPopulationOfOneHundred
+                .receiveDonationFrom(this.myMockedUser, this.myNormalMockedDonation)
+        Assert.assertTrue(myProjectWithPopulationOfOneHundred.budgetCollected().equals(1000.0))
     }
 
 
     @Test
     fun whenAProjectWithMoneyFactorOf1000AndPopulationOf100ReceivesADonationOf1000ThenTheNeededBudgetIs99000() {
-        myProjectWithPopulationOfOneHundred.receiveDonationFrom(this.myUser, this.myNormalDonation)
+        myProjectWithPopulationOfOneHundred.receiveDonationFrom(this.myMockedUser, this.myNormalMockedDonation)
         Assert.assertTrue(myProjectWithPopulationOfOneHundred.neededBudget().equals(99000.0))
     }
 
@@ -202,6 +209,12 @@ class TestProject {
 
     @Test (expected = CannotMakeADonationToAFinishedProjectException::class)
     fun whenADonationIsMadeToAProjectThatIsFinishedThenItThrowsAnException() {
-        myFinishedProject.receiveDonationFrom(myUser, myNormalDonation)
+        myFinishedProject.receiveDonationFrom(myMockedUser, myNormalMockedDonation)
+    }
+
+    @Test
+    fun whenTheUserCollaboratesWithMoreThan1000PesosThenHeWillObtainTheSameAmountOfPointsAsInvestedPesos() {
+        myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myTwoThousandDonation)
+        Assert.assertTrue(myRealUser.points().equals(2000.0))
     }
 }
