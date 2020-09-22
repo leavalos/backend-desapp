@@ -1,0 +1,15 @@
+---------------------------------------------------------------------
+TAG 1.0
+---------------------------------------------------------------------
+NEW FEATURES:
+* Classes for Location, User (UserRoot and UserDonation), Project, Donation added.
+* Exceptions for specific causes added.
+* Test added.
+* Points system added.
+* Donations system added.
+
+NOTES:
+* Points earned register.
+* Codacy coverage dashboard.
+
+KNOWN ISSUES:

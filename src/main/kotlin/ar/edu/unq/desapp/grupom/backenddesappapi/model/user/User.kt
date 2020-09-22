@@ -3,8 +3,11 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveDonationPrivilege
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveRootPrivilege
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
+import java.time.LocalDate
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
+import java.util.regex.Pattern.compile
 
 abstract class User {
 
@@ -13,9 +16,28 @@ abstract class User {
     private var nickName:String
 
     constructor(mail:String, password:String, nickName:String){
+        this.validateEmail(mail)
         this.mail = mail
         this.password = password
         this.nickName = nickName
+    }
+
+    fun isEmail(email : String) : Boolean {
+        return compile(
+                "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                        "\\@" +
+                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                        "(" +
+                        "\\." +
+                        "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                        ")+"
+        ).matcher(email).matches();
+    }
+
+    fun validateEmail(email: String) {
+        if (!this.isEmail(email)) {
+            throw InvalidEmailException(email)
+        }
     }
 
     fun mail() : String {
@@ -66,5 +88,16 @@ abstract class User {
         throw DoNotHaveDonationPrivilege()
     }
 
+    open fun createProject(name : String, moneyFactor: Double, beginningDate : LocalDate,
+                           finishDate : LocalDate, minPercentage: Int)  : Project {
+        throw DoNotHaveRootPrivilege()
+    }
 
+    open fun madeOneDonationInThisMonth(): Boolean {
+        throw DoNotHaveDonationPrivilege()
+    }
+
+    open fun countDonationsMadeInThisMonth(): Int {
+        throw DoNotHaveDonationPrivilege()
+    }
 }

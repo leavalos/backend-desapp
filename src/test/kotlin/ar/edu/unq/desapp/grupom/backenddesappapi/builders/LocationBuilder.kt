@@ -20,7 +20,11 @@ class LocationBuilder {
     }
 
     fun build(): Location {
-        return Location(name, province, population, hasConnection)
+        var location = Location(name, province, population, hasConnection)
+        if (this.project != null) {
+            location.assignProject(this.project!!)
+        }
+        return location
     }
 
     fun withName(aName: String): LocationBuilder {
@@ -45,6 +49,11 @@ class LocationBuilder {
 
     fun withProject(project: Project): LocationBuilder {
         this.project = project
+        return this
+    }
+
+    fun withOutProject() : LocationBuilder {
+        this.project = null
         return this
     }
 }

@@ -51,15 +51,16 @@ class Location {
 
     fun assignProject(project: Project) {
         this.project = project
+        project.setPopulation(this.population)
     }
 
+
+    fun totalBudgedRequired() : Double {
+        return this.project!!.totalBudgedRequired()
+    }
 
     fun neededBudget() : Double {
-        return this.project()!!.neededBudget(this.population)
-    }
-
-    fun minimumBudget() : Double {
-        return this.project()!!.minimumBudget(this.population)
+        return this.project!!.neededBudget()
     }
 
 }
