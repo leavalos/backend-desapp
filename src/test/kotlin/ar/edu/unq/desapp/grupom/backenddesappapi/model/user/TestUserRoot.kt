@@ -73,6 +73,7 @@ class TestUserRoot {
         this.myUserRoot.finishProject(this.myLocation)
 
         Assert.assertTrue(this.myProjectReadyToBeFinished.isFinished)
+        Assert.assertTrue(this.myLocation.hasConnection())
     }
 
     @Test (expected = TheFinishDateOfTheProjectHasNotPassedYetException::class)

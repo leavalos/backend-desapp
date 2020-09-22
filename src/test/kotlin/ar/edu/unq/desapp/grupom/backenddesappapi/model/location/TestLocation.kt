@@ -97,5 +97,4 @@ class TestLocation {
         Assert.assertEquals(this.myLocation.totalBudgedRequired(), 300000.00, 0.1 )
     }
 
-
 }

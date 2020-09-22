@@ -13,6 +13,7 @@ class UserRoot : User {
     override fun finishProject(location: Location) {
         try {
             location.project()?.finishProject()
+            location.changeConnectionState()
         } catch (e: Exception) {
             throw e
         }
