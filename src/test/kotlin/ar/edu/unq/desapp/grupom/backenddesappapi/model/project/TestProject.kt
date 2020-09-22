@@ -242,4 +242,10 @@ class TestProject {
         myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
         Assert.assertTrue(myRealUser.points().equals(500.0))
     }
+
+    @Test
+    fun whenAUserCollaboratesForFirstTimeInAProjectThenHeWillNotObtainABonusOf500Points() {
+        myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
+        Assert.assertTrue(myRealUser.points().equals(0.0))
+    }
 }
