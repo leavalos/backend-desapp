@@ -134,7 +134,7 @@ class Project {
             points += donation.money.toInt()
         }
         if (this.population() < 2000) {
-            points += points
+            points += (donation.money * 2)
         }
         if (user.madeMoreThanTwoDonationsInThisMonth()) {
             points += 500
