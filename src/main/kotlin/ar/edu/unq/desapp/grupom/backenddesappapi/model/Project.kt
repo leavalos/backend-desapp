@@ -1,8 +1,7 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.*
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import java.time.LocalDate
 
 class Project {
@@ -45,14 +44,6 @@ class Project {
         this.population = population
         this.minPercentageToFinish = minPercentage
         this.donations = mutableListOf()
-    }
-
-    fun name() : String {
-        return this.name
-    }
-
-    fun donations() : MutableList<Donation> {
-        return this.donations
     }
 
     private fun verifyParameters(
@@ -113,7 +104,6 @@ class Project {
         }
     }
 
-
     fun receiveDonationFrom(user: User, donation: Donation) {
         verifyProjectIsNotFinished()
         this.donations.add(donation)
@@ -133,21 +123,16 @@ class Project {
         if (donation.money > 1000) {
             points += donation.money.toInt()
         }
-        if (this.population() < 2000) {
+        if (this.population < 2000) {
             points += (donation.money * 2)
         }
-        if (user.madeMoreThanTwoDonationsInThisMonth()) {
+        if (user.madeOneDonationInThisMonth()) {
             points += 500
         }
         return points
     }
 
-    fun population() : Int {
-        return this.population
-    }
-
-
-    fun totalBudgedRequired(): Double = this.population() * this.moneyFactor
+    fun totalBudgedRequired(): Double = this.population * this.moneyFactor
 
     fun minimumBudgetToFinish(): Double {
         return totalBudgedRequired() * this.percentage()
@@ -177,8 +162,15 @@ class Project {
         }
     }
 
+    fun population(): Int {
+        return this.population
+    }
+
     fun setPopulation(population: Int) {
         this.population = population
     }
 
+    fun name() : String {
+        return this.name
+    }
 }

@@ -107,7 +107,7 @@ class TestUserDonation {
 
     @Test
     fun testNoDonationsWereMadeInThisMonth() {
-        Assert.assertFalse(this.myUser.madeMoreThanTwoDonationsInThisMonth())
+        Assert.assertFalse(this.myUser.madeOneDonationInThisMonth())
     }
 
     @Test
@@ -115,14 +115,14 @@ class TestUserDonation {
         var date = LocalDateTime.now()
         this.myUser.addDonation(DonationBuilder.donation().withDate(date.minusMonths((date.month.value - 1).toLong())).build())
         this.myUser.addDonation(DonationBuilder.donation().build())
-        Assert.assertFalse(this.myUser.madeMoreThanTwoDonationsInThisMonth())
+        Assert.assertFalse(this.myUser.madeOneDonationInThisMonth())
     }
 
     @Test
     fun testTwoDonationsWereMadeInTheCurrentMonth() {
         this.myUser.addDonation(DonationBuilder.donation().build())
         this.myUser.addDonation(DonationBuilder.donation().build())
-        Assert.assertTrue(this.myUser.madeMoreThanTwoDonationsInThisMonth())
+        Assert.assertTrue(this.myUser.madeOneDonationInThisMonth())
     }
 
     @Test(expected = DoNotHaveRootPrivilege::class)

@@ -51,6 +51,7 @@ class TestProject {
 
         myOneThousandDonation = mockk()
         every { myOneThousandDonation.money } returns 1000.0
+        every { myOneThousandDonation.hasBeenMadeInTheCurrentMonth() } returns true
         myTwoThousandDonation = mockk()
         every { myTwoThousandDonation.money } returns 2000.0
         myOneHundredThousandDonation = mockk()
@@ -60,7 +61,7 @@ class TestProject {
         myListOfDonations.add(this.myOneThousandDonation)
         myMockedUser = mockk()
         every { myMockedUser.addDonation(any()) } just Runs
-        every { myMockedUser.madeMoreThanTwoDonationsInThisMonth()} returns false
+        every { myMockedUser.madeOneDonationInThisMonth()} returns false
         every { myMockedUser.earnPoints(any())} just Runs
 
         myRealUser = UserDonation("un_correo@email.com", "pass123", "John")
@@ -233,5 +234,12 @@ class TestProject {
     fun whenADonationIsForALocationWithMoreThan2000InhabitantsThenTheUserWillNotObtainTheDoubleAmountAsInvestedPesos() {
         myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
         Assert.assertTrue(myRealUser.points().equals(0.0))
+    }
+
+    @Test
+    fun whenAUserCollaboratesForSecondTimeInAProjectThenHeWillObtainABonusOf500Points() {
+        myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
+        myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
+        Assert.assertTrue(myRealUser.points().equals(500.0))
     }
 }

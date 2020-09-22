@@ -93,7 +93,7 @@ abstract class User {
         throw DoNotHaveRootPrivilege()
     }
 
-    open fun madeMoreThanTwoDonationsInThisMonth(): Boolean {
+    open fun madeOneDonationInThisMonth(): Boolean {
         throw DoNotHaveDonationPrivilege()
     }
 

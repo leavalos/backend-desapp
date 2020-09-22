@@ -18,7 +18,7 @@ class UserDonation : User {
     }
 
     override fun donate(money: Double, comment: String, project: Project) {
-        val donation = Donation(money, comment, this.nickname(), LocalDateTime.now(), project.name())
+        val donation = Donation(money, comment, this.nickname(), LocalDateTime.now(), project.name)
         project.receiveDonationFrom(this, donation)
     }
 
@@ -34,8 +34,8 @@ class UserDonation : User {
         return this.madeDonations
     }
 
-    override fun madeMoreThanTwoDonationsInThisMonth(): Boolean {
-        return 2 <= this.madeDonations.filter { donation ->  donation.hasBeenMadeInTheCurrentMonth()}.size
+    override fun madeOneDonationInThisMonth(): Boolean {
+        return 1 <= this.madeDonations.count { donation -> donation.hasBeenMadeInTheCurrentMonth()}
     }
 
 }
