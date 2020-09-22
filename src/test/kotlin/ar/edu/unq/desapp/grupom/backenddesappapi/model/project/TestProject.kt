@@ -1,6 +1,5 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model.project
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.builders.LocationBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
@@ -58,6 +57,9 @@ class TestProject {
         every { myUser.earnPoints(100000.0)} just Runs
         every { myUser.addDonation(myNormalDonation) } just Runs
         every { myUser.addDonation(myBigDonation)} just Runs
+        every { myUser.madeMoreThanTwoDonationsInThisMonth()} returns false
+        every { myUser.earnPoints(200000.0)} just Runs
+        every { myUser.earnPoints(2000.0)} just Runs
 
         myProjectThatNotReachNeededBudget = myProjectBuilder
                 .withBeginningDate(june)
