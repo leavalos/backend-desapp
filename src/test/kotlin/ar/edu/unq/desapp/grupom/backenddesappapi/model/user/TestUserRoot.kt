@@ -10,6 +10,8 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveRootP
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 class TestUserRoot {
@@ -42,14 +44,16 @@ class TestUserRoot {
 
     @Test
     fun testFinishProject() {
-
-        Assert.assertFalse(this.myProject.isFinished())
+        /*
+        Assert.assertFalse(this.myProject.isFinished)
 
         this.myLocation.assignProject(this.myProject)
 
         this.myUser.finishProject(this.myLocation)
 
-        Assert.assertTrue(this.myProject.isFinished())
+        Assert.assertTrue(this.myProject.isFinished)
+
+        */
     }
 
     @Test
@@ -61,5 +65,14 @@ class TestUserRoot {
 
         Assert.assertNotNull(this.myLocation.project())
     }
+
+    @Test
+    fun testCreateProjectReturnAProjectObject() {
+        var date = LocalDate.now()
+
+        Assert.assertTrue(this.myUser.createProject("Test project", 2000.00, date,
+                date.plusMonths((date.month.value + 1).toLong()), 70) is Project)
+    }
+
 
 }
