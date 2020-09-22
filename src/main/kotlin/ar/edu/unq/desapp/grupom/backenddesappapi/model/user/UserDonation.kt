@@ -37,7 +37,7 @@ class UserDonation : User {
         return this.countDonationsMadeInThisMonth() == 1
     }
 
-    private fun countDonationsMadeInThisMonth(): Int {
+    override fun countDonationsMadeInThisMonth(): Int {
         return this.madeDonations.count { donation -> donation.hasBeenMadeInTheCurrentMonth() }
     }
 

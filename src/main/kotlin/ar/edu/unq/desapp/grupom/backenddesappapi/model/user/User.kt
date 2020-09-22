@@ -97,5 +97,7 @@ abstract class User {
         throw DoNotHaveDonationPrivilege()
     }
 
-
+    open fun countDonationsMadeInThisMonth(): Int {
+        throw DoNotHaveDonationPrivilege()
+    }
 }

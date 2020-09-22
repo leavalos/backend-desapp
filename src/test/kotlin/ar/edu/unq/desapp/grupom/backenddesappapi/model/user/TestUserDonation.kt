@@ -15,9 +15,9 @@ import java.time.LocalDateTime
 
 class TestUserDonation {
 
-    lateinit var myUser: User
-    lateinit var myProject: Project
-    lateinit var myLocation: Location
+    private lateinit var myUser: User
+    private lateinit var myProject: Project
+    private lateinit var myLocation: Location
 
     @Before
     fun setUp() {
@@ -52,7 +52,7 @@ class TestUserDonation {
         this.myUser.donate(100.00, "My comment for my test donation",
                 this.myProject)
 
-        var madeDonation = this.myUser.madeDonations().get(0)
+        val madeDonation = this.myUser.madeDonations().first()
 
         Assert.assertEquals(this.myUser.nickname(), madeDonation.nickname)
         Assert.assertEquals("My comment for my test donation", madeDonation.comment)
@@ -64,17 +64,17 @@ class TestUserDonation {
     @Test
     fun testEarnedPointsAfterADonationWasMade() {
         this.myUser.donate(100.00, "My comment for my test donation",
-                this.myProject)
+                ProjectBuilder.project().withPopulation(2000).build())
 
         Assert.assertEquals(00.00, this.myUser.points(), 0.00)
     }
 
     @Test
     fun testEarnedPointsAfterADonationWasMadeWithALocationWith2000People() {
-        this.myUser.donate(1000.00, "My comment for my test donation",
+        this.myUser.donate(1001.00, "My comment for my test donation",
                 ProjectBuilder.project().withPopulation(2000).build())
 
-        Assert.assertEquals(1000.00, this.myUser.points(), 0.00)
+        Assert.assertEquals(1001.00, this.myUser.points(), 0.00)
     }
 
     @Test
@@ -96,13 +96,13 @@ class TestUserDonation {
 
     @Test
     fun testEarnedPointsAfterTwoDonationsWereMade() {
-        this.myUser.donate(1000.00, "My comment for my test donation",
+        this.myUser.donate(1001.00, "My comment for my test donation",
                 ProjectBuilder.project().withPopulation(2000).build())
 
         this.myUser.donate(500.00, "My comment for my test donation",
                 ProjectBuilder.project().withPopulation(2000).build())
 
-        Assert.assertEquals(1500.00, this.myUser.points(), 0.00)
+        Assert.assertEquals(1501.00, this.myUser.points(), 0.00)
     }
 
     @Test
@@ -112,17 +112,17 @@ class TestUserDonation {
 
     @Test
     fun testDonationsWereMadeLastMonthAndInCurrentMonth() {
-        var date = LocalDateTime.now()
+        val date = LocalDateTime.now()
         this.myUser.addDonation(DonationBuilder.donation().withDate(date.minusMonths((date.month.value - 1).toLong())).build())
         this.myUser.addDonation(DonationBuilder.donation().build())
-        Assert.assertFalse(this.myUser.madeOneDonationInThisMonth())
+        Assert.assertTrue(this.myUser.madeOneDonationInThisMonth())
     }
 
     @Test
     fun testTwoDonationsWereMadeInTheCurrentMonth() {
         this.myUser.addDonation(DonationBuilder.donation().build())
         this.myUser.addDonation(DonationBuilder.donation().build())
-        Assert.assertTrue(this.myUser.madeOneDonationInThisMonth())
+        Assert.assertTrue(this.myUser.countDonationsMadeInThisMonth() == 2)
     }
 
     @Test(expected = DoNotHaveRootPrivilege::class)

@@ -251,7 +251,7 @@ class TestProject {
 
 
     @Test
-    fun whenAUserCollaboratesForThirdsTimeOnwardsInAProjectThenHeWillNotObtainABonusOf500Points() {
+    fun whenAUserCollaboratesForThirdsTimeOnwardsInAProjectThenHeWillObtainABonusOf500PointsOnlyInTheSecondTime() {
         myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
         myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
         myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
