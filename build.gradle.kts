@@ -55,8 +55,9 @@ tasks.test {
 tasks.jacocoTestReport {
 	dependsOn(tasks.test) // tests are required to run before generating the report
 	reports {
-		xml.isEnabled = false
+		xml.isEnabled = true
 		csv.isEnabled = false
+		html.isEnabled = true
 		html.destination = file("${buildDir}/jacocoHtml")
 	}
 }
