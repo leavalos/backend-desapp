@@ -56,15 +56,12 @@ tasks.jacocoTestReport {
 	dependsOn(tasks.test) // tests are required to run before generating the report
 	reports {
 		xml.isEnabled = true
-		csv.isEnabled = false
 		html.isEnabled = true
-		html.destination = file("${buildDir}/jacocoHtml")
 	}
 }
 
 jacoco {
 	toolVersion = "0.8.5"
-	reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
 tasks.withType<KotlinCompile> {
