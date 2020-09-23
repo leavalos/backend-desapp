@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -9,7 +8,6 @@ plugins {
 	kotlin("plugin.spring") version "1.3.72"
 	kotlin("plugin.jpa") version "1.3.72"
 	jacoco
-	java
 }
 
 group = "ar.edu.unq.desapp.grupom"
@@ -25,9 +23,6 @@ configurations {
 repositories {
 	mavenCentral()
 }
-
-val junit5Version = "5.3.1"
-val kotlinVersion = plugins.getPlugin(KotlinPluginWrapper::class.java).kotlinPluginVersion
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -48,36 +43,27 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.mockito:mockito-core:3.5.10")
 	testImplementation("io.mockk:mockk:1.10.0")
-	testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
-	testImplementation("org.junit.jupiter:junit-jupiter-engine:$junit5Version")
 }
 
+tasks.withType<Test> {
+	useJUnitPlatform()
+}
 
-tasks {
-	"test"(Test::class) {
-		useJUnitPlatform()
-	}
-
-	val codeCoverageReport by creating(JacocoReport::class) {
-		executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
-
-		subprojects.onEach {
-			sourceSets(it.sourceSets["main"])
-		}
-
-		reports {
-			xml.isEnabled = true
-			xml.destination = File("$buildDir/reports/jacoco/report.xml")
-			html.isEnabled = false
-			csv.isEnabled = false
-		}
-
-		dependsOn("test")
+tasks.test {
+	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+	dependsOn(tasks.test) // tests are required to run before generating the report
+	reports {
+		xml.isEnabled = true
+		csv.isEnabled = false
+		html.destination = file("${buildDir}/jacocoHtml")
 	}
 }
 
 jacoco {
 	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
 tasks.withType<KotlinCompile> {
