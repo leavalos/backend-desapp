@@ -1,12 +1,18 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
+import lombok.Generated
+
 class Location {
 
-
+    @Generated
     private var name:String
+    @Generated
     private var province:Province
+    @Generated
     private var population: Int
+    @Generated
     private var hasConnection: Boolean
+    @Generated
     private var project: Project?
 
     constructor(name:String, province:Province, population:Int, hasConnection:Boolean){
@@ -29,7 +35,7 @@ class Location {
         return this.name
     }
 
-    fun pronvince() : Province {
+    fun province() : Province {
         return this.province
     }
 

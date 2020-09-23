@@ -9,17 +9,10 @@ import java.time.LocalDate
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
 import java.util.regex.Pattern.compile
 
-abstract class User {
+abstract class User(private var mail: String, private var password: String, private var nickName: String) {
 
-    private var mail:String
-    private var password:String
-    private var nickName:String
-
-    constructor(mail:String, password:String, nickName:String){
+    init {
         this.validateEmail(mail)
-        this.mail = mail
-        this.password = password
-        this.nickName = nickName
     }
 
     fun isEmail(email : String) : Boolean {
@@ -31,7 +24,7 @@ abstract class User {
                         "\\." +
                         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                         ")+"
-        ).matcher(email).matches();
+        ).matcher(email).matches()
     }
 
     fun validateEmail(email: String) {
