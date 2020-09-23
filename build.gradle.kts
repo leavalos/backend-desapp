@@ -52,20 +52,27 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-engine:$junit5Version")
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
 
-tasks.test {
-	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
-}
-tasks.jacocoTestReport {
-	dependsOn(tasks.test) // tests are required to run before generating the report
-	reports {
-		xml.isEnabled = true
-		xml.destination = File("$buildDir/reports/jacoco/report.xml")
-		html.isEnabled = false
-		csv.isEnabled = false
+tasks {
+	"test"(Test::class) {
+		useJUnitPlatform()
+	}
+
+	val codeCoverageReport by creating(JacocoReport::class) {
+		executionData(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+
+		subprojects.onEach {
+			sourceSets(it.sourceSets["main"])
+		}
+
+		reports {
+			xml.isEnabled = true
+			xml.destination = File("$buildDir/reports/jacoco/report.xml")
+			html.isEnabled = false
+			csv.isEnabled = false
+		}
+
+		dependsOn("test")
 	}
 }
 
