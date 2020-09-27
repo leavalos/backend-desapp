@@ -2,9 +2,7 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.DoNotHaveDonationPrivilege
 import java.time.LocalDateTime
-
 class UserDonation : User {
 
     var points: Double = 00.00
@@ -18,7 +16,7 @@ class UserDonation : User {
     }
 
     override fun donate(money: Double, comment: String, project: Project) {
-        val donation = Donation(money, comment, this.nickname(), LocalDateTime.now(), project.name())
+        val donation = Donation(money, comment, this.nickname(), LocalDateTime.now(), project.name)
         project.receiveDonationFrom(this, donation)
     }
 
@@ -32,6 +30,14 @@ class UserDonation : User {
 
     override fun madeDonations() : MutableList<Donation> {
         return this.madeDonations
+    }
+
+    override fun madeOneDonationInThisMonth(): Boolean {
+        return this.countDonationsMadeInThisMonth() == 1
+    }
+
+    override fun countDonationsMadeInThisMonth(): Int {
+        return this.madeDonations.count { donation -> donation.hasBeenMadeInTheCurrentMonth() }
     }
 
 }
