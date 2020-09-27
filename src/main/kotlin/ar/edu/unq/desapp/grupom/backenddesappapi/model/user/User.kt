@@ -5,11 +5,21 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
-import java.time.LocalDate
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
+import java.time.LocalDate
 import java.util.regex.Pattern.compile
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
 
+
+@Entity
 abstract class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private var id: Long? = null
 
     private var mail:String
     private var password:String
@@ -20,6 +30,14 @@ abstract class User {
         this.mail = mail
         this.password = password
         this.nickName = nickName
+    }
+
+    fun setId(id: Long) {
+        this.id = id
+    }
+
+    fun getId(): Long {
+        return this.id!!
     }
 
     fun isEmail(email : String) : Boolean {
