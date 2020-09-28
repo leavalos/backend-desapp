@@ -18,8 +18,8 @@ import javax.persistence.Id
 abstract class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private var id: Long? = null
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long? = null
 
     private var mail:String
     private var password:String
@@ -32,11 +32,11 @@ abstract class User {
         this.nickName = nickName
     }
 
-    fun setId(id: Long) {
+    open fun setId(id: Long) {
         this.id = id
     }
 
-    fun getId(): Long {
+    open fun getId(): Long {
         return this.id!!
     }
 
@@ -62,7 +62,7 @@ abstract class User {
         return this.mail
     }
 
-    fun password() : String {
+    open fun password() : String {
         return  this.password
     }
 
@@ -70,7 +70,7 @@ abstract class User {
         return this.nickName
     }
 
-    fun setPassword(aPassword : String)  {
+    open fun setPassword(aPassword : String)  {
         this.password = aPassword
     }
 
