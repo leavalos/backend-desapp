@@ -16,7 +16,7 @@ class Donation(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
+    var id: Long? = null
 
     fun hasBeenMadeInTheCurrentMonth() : Boolean {
         val currentMonth = LocalDateTime.now().month

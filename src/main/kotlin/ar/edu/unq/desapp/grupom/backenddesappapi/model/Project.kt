@@ -10,7 +10,7 @@ class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
+    var id: Long? = null
 
     var name: String
     @OneToMany

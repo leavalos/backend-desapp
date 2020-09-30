@@ -7,7 +7,7 @@ class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
+    var id: Long? = null
 
     private var name:String
     private var province:Province
