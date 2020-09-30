@@ -4,9 +4,8 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.UserNotFo
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.persistence.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService: IUserService{
@@ -18,6 +17,7 @@ class UserService: IUserService{
         return userRepository.findAll()
     }
 
+    @Transactional
     override fun addUser(user: User) {
         userRepository.save(user)
     }

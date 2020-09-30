@@ -1,12 +1,19 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
+import javax.persistence.*
+
+@Entity
 class Location {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long? = null
 
     private var name:String
     private var province:Province
     private var population: Int
     private var hasConnection: Boolean
+    @OneToOne
     private var project: Project?
 
     constructor(name:String, province:Province, population:Int, hasConnection:Boolean){

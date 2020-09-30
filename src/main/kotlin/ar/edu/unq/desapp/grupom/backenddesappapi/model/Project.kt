@@ -3,10 +3,17 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import java.time.LocalDate
+import javax.persistence.*
 
+@Entity
 class Project {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long? = null
+
     var name: String
+    @OneToMany
     var donations: MutableList<Donation>
     var moneyFactor: Double
     var beginningDate: LocalDate
