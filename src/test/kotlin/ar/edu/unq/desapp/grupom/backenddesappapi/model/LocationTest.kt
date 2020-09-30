@@ -1,10 +1,7 @@
-package ar.edu.unq.desapp.grupom.backenddesappapi.model.location
+package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.LocationBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Province
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -12,10 +9,10 @@ import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 
 
-class TestLocation {
+class LocationTest {
 
-    lateinit var myLocation: Location
-    lateinit var myProject: Project
+    private lateinit var myLocation: Location
+    private lateinit var myProject: Project
 
     @Before
     fun setUp() {
@@ -25,25 +22,25 @@ class TestLocation {
 
     @Test
     fun locationHasName() {
-        var locationTest = LocationBuilder.location().withName("TestName").build()
+        val locationTest = LocationBuilder.location().withName("TestName").build()
         Assert.assertEquals("TestName", locationTest.name())
     }
 
     @Test
     fun locationHasProvince() {
-        var locationTest = LocationBuilder.location().withProvince(Province.BuenosAires).build()
-        Assert.assertEquals(Province.BuenosAires, locationTest.pronvince())
+        val locationTest = LocationBuilder.location().withProvince(Province.BuenosAires).build()
+        Assert.assertEquals(Province.BuenosAires, locationTest.province())
     }
 
     @Test
     fun locationHasPopulation() {
-        var locationTest = LocationBuilder.location().withPopulation(1000).build()
+        val locationTest = LocationBuilder.location().withPopulation(1000).build()
         Assert.assertEquals(1000, locationTest.population())
     }
 
     @Test
     fun locationHasConnection() {
-        var locationTest = LocationBuilder.location().withHasConnection(true).build()
+        val locationTest = LocationBuilder.location().withHasConnection(true).build()
         Assert.assertTrue(locationTest.hasConnection())
     }
 
@@ -51,7 +48,7 @@ class TestLocation {
     fun locationHasProject() {
         val mockProject = Mockito.mock(Project::class.java)
 
-        var locationTest = LocationBuilder.location().withProject(mockProject).build()
+        val locationTest = LocationBuilder.location().withProject(mockProject).build()
         Assert.assertEquals(mockProject, locationTest.project())
     }
 
@@ -70,7 +67,7 @@ class TestLocation {
     @Test
     fun testAssignProject() {
 
-        var locationWithOneHundredPeople = LocationBuilder.location().withPopulation(100).build()
+        val locationWithOneHundredPeople = LocationBuilder.location().withPopulation(100).build()
 
         Assert.assertNull(locationWithOneHundredPeople.project())
 
@@ -97,4 +94,23 @@ class TestLocation {
         Assert.assertEquals(this.myLocation.totalBudgedRequired(), 300000.00, 0.1 )
     }
 
+    @Test fun testCreateCustomLocation() {
+        val customLocation = Location("Epecuen", Province.BuenosAires, 1, false, myProject)
+        Assert.assertEquals(customLocation.name(), "Epecuen")
+        Assert.assertEquals(customLocation.province(), Province.BuenosAires)
+        Assert.assertEquals(customLocation.population(), 1)
+        Assert.assertEquals(customLocation.hasConnection(), false)
+        Assert.assertEquals(customLocation.project(), myProject)
+    }
+/*
+    @Test fun testSetName() {
+        val defaultLocation = Location("Ezpeleta", Province.BuenosAires, 1500, true)
+                .apply {
+                    this.name = "Quilmes"
+
+                }
+        //defaultLocation.setName("Quilmes")
+        Assert.assertEquals("Quilmes", defaultLocation.name())
+    }
+*/
 }
