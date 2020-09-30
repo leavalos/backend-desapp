@@ -1,8 +1,6 @@
-package ar.edu.unq.desapp.grupom.backenddesappapi.model.project
+package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.ProjectBuilder
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
@@ -15,7 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
 
-class TestProject {
+class ProjectTest {
 
     private lateinit var myFinishedProject: Project
     private lateinit var myProjectReadyToBeFinished: Project
@@ -257,4 +255,31 @@ class TestProject {
         myProjectWithPopulationOfTwoThousand.receiveDonationFrom(myRealUser, myOneThousandDonation)
         Assert.assertTrue(myRealUser.points().equals(500.0))
     }
+
+    @Test
+    fun whenAProjectIsCreatedByDefaultThenHasHisNameHisDatesAndPopulation() {
+        val newProjectByDefault = Project(
+                "epecuen connection",
+                september,
+                december,
+                1)
+        Assert.assertEquals("epecuen connection", newProjectByDefault.name)
+        Assert.assertEquals(september, newProjectByDefault.beginningDate)
+        Assert.assertEquals(december, newProjectByDefault.finishDate)
+        Assert.assertEquals(1, newProjectByDefault.population())
+    }
+/*
+    @Test
+    fun whenAttributesFromProjectHasBeenSetThenThisChanges() {
+        myProjectByDefault.setName("Epecuen connection")
+        myProjectByDefault.setDonations(myListOfDonations)
+        myProjectByDefault.setBeginningDate(june)
+        myProjectByDefault.setFinishDate(august)
+        myProjectByDefault.setMoneyFactor(2000)
+        myProjectByDefault.setIsFinished(false)
+        myProjectByDefault.setMinPercentageToFinish(60)
+        myProjectByDefault.setPopulation(500)
+
+    }
+*/
 }

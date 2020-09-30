@@ -7,6 +7,7 @@ plugins {
 	kotlin("jvm") version "1.3.72"
 	kotlin("plugin.spring") version "1.3.72"
 	kotlin("plugin.jpa") version "1.3.72"
+	application
 	jacoco
 }
 
@@ -45,30 +46,29 @@ dependencies {
 	testImplementation("io.mockk:mockk:1.10.0")
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+
+tasks.withType<KotlinCompile> {
+	kotlinOptions.jvmTarget = "11"
+}
+
+application {
+	mainClass.set("ar.edu.unq.desapp.grupom.backenddesappapi.BackendDesappApiApplication")
+}
+
+jacoco {
+	applyTo(tasks.run.get())
+	toolVersion = "0.8.5"
 }
 
 tasks.test {
 	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
+
 tasks.jacocoTestReport {
 	dependsOn(tasks.test) // tests are required to run before generating the report
-	reports {
-		xml.isEnabled = true
-		csv.isEnabled = false
-		html.destination = file("${buildDir}/jacocoHtml")
-	}
 }
 
-jacoco {
-	toolVersion = "0.8.5"
-	reportsDir = file("$buildDir/customJacocoReportDir")
-}
-
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
-	}
+tasks.register<JacocoReport>("applicationCodeCoverageReport") {
+	executionData(tasks.run.get())
+	sourceSets(sourceSets.main.get())
 }

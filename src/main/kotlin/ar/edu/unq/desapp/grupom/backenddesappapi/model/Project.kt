@@ -2,17 +2,26 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
+import lombok.Generated
 import java.time.LocalDate
 
 class Project {
 
+    @Generated
     var name: String
+    @Generated
     var donations: MutableList<Donation>
+    @Generated
     var moneyFactor: Double
+    @Generated
     var beginningDate: LocalDate
+    @Generated
     var finishDate: LocalDate
+    @Generated
     var isFinished: Boolean
+    @Generated
     private var population: Int
+    @Generated
     var minPercentageToFinish: Int
 
     constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate, population: Int) {
