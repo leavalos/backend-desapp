@@ -61,6 +61,7 @@ jacoco {
 }
 
 tasks.test {
+	useJUnitPlatform()
 	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
 
