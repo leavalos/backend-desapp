@@ -61,7 +61,6 @@ jacoco {
 }
 
 tasks.test {
-	useJUnitPlatform()
 	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
 
@@ -70,7 +69,7 @@ tasks.jacocoTestReport {
 	reports {
 		xml.isEnabled = true
 		csv.isEnabled = false
-		html.isEnabled = false
+		html.isEnabled = true
 	}
 }
 
