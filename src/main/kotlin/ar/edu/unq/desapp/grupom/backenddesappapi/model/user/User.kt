@@ -14,6 +14,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 
+
 @Entity
 abstract class User {
 
@@ -49,7 +50,7 @@ abstract class User {
                         "\\." +
                         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                         ")+"
-        ).matcher(email).matches();
+        ).matcher(email).matches()
     }
 
     fun validateEmail(email: String) {

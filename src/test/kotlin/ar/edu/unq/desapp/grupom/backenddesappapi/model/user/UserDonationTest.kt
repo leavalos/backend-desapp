@@ -13,7 +13,7 @@ import org.junit.Test
 import java.time.LocalDateTime
 
 
-class TestUserDonation {
+class UserDonationTest {
 
     private lateinit var myUser: User
     private lateinit var myProject: Project
