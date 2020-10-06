@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
+import lombok.Generated
 import java.time.LocalDateTime
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -8,11 +9,16 @@ import javax.persistence.Id
 
 @Entity
 class Donation(
-        var money: Double,
-        var comment: String,
-        var nickname: String,
-        var date: LocalDateTime,
-        var projectName: String) {
+        @Generated
+        val money: Double,
+        @Generated
+        val comment: String,
+        @Generated
+        val nickname: String,
+        @Generated
+        val date: LocalDateTime,
+        @Generated
+        val projectName: String) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

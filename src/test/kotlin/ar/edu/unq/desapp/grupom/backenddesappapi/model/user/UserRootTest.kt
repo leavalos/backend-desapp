@@ -16,7 +16,7 @@ import org.junit.Test
 import java.time.LocalDate
 
 
-class TestUserRoot {
+class UserRootTest {
 
     private lateinit var myUserDonor: User
     private lateinit var myUserRoot: User

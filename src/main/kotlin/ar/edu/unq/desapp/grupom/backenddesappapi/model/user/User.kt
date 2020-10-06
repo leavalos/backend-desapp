@@ -14,13 +14,14 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 
+
 @Entity
 abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Long? = null
-    
+
     private var mail:String
     private var password:String
     private var nickName:String
@@ -49,7 +50,7 @@ abstract class User {
                         "\\." +
                         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                         ")+"
-        ).matcher(email).matches();
+        ).matcher(email).matches()
     }
 
     fun validateEmail(email: String) {
