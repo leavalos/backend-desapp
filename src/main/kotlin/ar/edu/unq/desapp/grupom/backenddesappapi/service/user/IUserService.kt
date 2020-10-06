@@ -13,6 +13,8 @@ interface IUserService {
 
     fun deleteUser(userId: Long)
 
+    fun createUser(email: String, password: String, nickname: String)
+
     fun createProject(userId: Long, project: Project)
 
 }

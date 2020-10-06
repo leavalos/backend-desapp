@@ -2,7 +2,7 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.repository
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.UserBuilder
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
-import ar.edu.unq.desapp.grupom.backenddesappapi.persistence.UserRepository
+import ar.edu.unq.desapp.grupom.backenddesappapi.persistence.user.UserRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 
