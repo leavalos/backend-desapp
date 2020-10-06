@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.service.user
 
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 
 interface IUserService {
@@ -11,5 +12,7 @@ interface IUserService {
     fun putUser(userId: Long, newUser: User)
 
     fun deleteUser(userId: Long)
+
+    fun createProject(userId: Long, project: Project)
 
 }

@@ -1,7 +1,7 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.controllers
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.service.project.IProjecctService
+import ar.edu.unq.desapp.grupom.backenddesappapi.service.project.IProjectService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.web.bind.annotation.GetMapping
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 class ProjectController {
 
     @Autowired
-    lateinit var projectService: IProjecctService
+    lateinit var projectService: IProjectService
 
     @GetMapping("/openProjects")
     fun getOpenProjects(): List<Project> {

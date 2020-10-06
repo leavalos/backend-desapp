@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.service.user
 
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.UserNotFoundException
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.persistence.UserRepository
@@ -27,13 +28,17 @@ class UserService: IUserService{
     }
 
     override fun putUser(userId: Long, newUser: User) {
-        var foundUser = this.getUserById(userId)
+        val foundUser = this.getUserById(userId)
         newUser.setId(foundUser.getId())
     }
 
     override fun deleteUser(userId: Long) {
-        var foundUser = this.getUserById(userId)
+        val foundUser = this.getUserById(userId)
         userRepository.delete(foundUser)
+    }
+
+    override fun createProject(userId: Long, project: Project) {
+        TODO("Not yet implemented")
     }
 }
 

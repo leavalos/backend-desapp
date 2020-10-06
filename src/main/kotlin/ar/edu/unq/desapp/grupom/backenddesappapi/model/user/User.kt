@@ -20,7 +20,7 @@ abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Long? = null
-
+    
     private var mail:String
     private var password:String
     private var nickName:String

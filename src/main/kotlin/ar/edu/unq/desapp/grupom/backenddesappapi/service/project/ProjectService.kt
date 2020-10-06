@@ -6,26 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class ProjectService : IProjecctService {
+class ProjectService : IProjectService {
 
     @Autowired
     lateinit var projectRepository: ProjectRepository
-
-    override fun getProject(): List<Project> {
-        TODO("Not yet implemented")
-    }
-
-    override fun addProject(project: Project) {
-        projectRepository.save(project)
-    }
-
-    override fun putProject(projectId: Long, newUser: Project) {
-        TODO("Not yet implemented")
-    }
-
-    override fun deleteProject(projectId: Long) {
-        TODO("Not yet implemented")
-    }
 
     override fun getOpenProjects(): List<Project> {
         return projectRepository.getOpenProjects()
