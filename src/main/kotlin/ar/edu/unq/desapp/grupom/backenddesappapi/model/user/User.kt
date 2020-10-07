@@ -5,14 +5,40 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
-import java.time.LocalDate
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
+import java.time.LocalDate
 import java.util.regex.Pattern.compile
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
 
-abstract class User(private var mail: String, private var password: String, private var nickName: String) {
 
-    init {
+
+@Entity
+abstract class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long? = null
+
+    private var mail:String
+    private var password:String
+    private var nickName:String
+
+    constructor(mail:String, password:String, nickName:String){
         this.validateEmail(mail)
+        this.mail = mail
+        this.password = password
+        this.nickName = nickName
+    }
+
+    open fun setId(id: Long) {
+        this.id = id
+    }
+
+    open fun getId(): Long {
+        return this.id!!
     }
 
     fun isEmail(email : String) : Boolean {
@@ -37,7 +63,7 @@ abstract class User(private var mail: String, private var password: String, priv
         return this.mail
     }
 
-    fun password() : String {
+    open fun password() : String {
         return  this.password
     }
 
@@ -45,7 +71,7 @@ abstract class User(private var mail: String, private var password: String, priv
         return this.nickName
     }
 
-    fun setPassword(aPassword : String)  {
+    open fun setPassword(aPassword : String)  {
         this.password = aPassword
     }
 

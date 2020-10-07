@@ -4,11 +4,20 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import lombok.Generated
 import java.time.LocalDate
+import javax.persistence.*
 
+@Entity
 class Project {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+
 
     @Generated
     var name: String
+    @OneToMany
     @Generated
     var donations: MutableList<Donation>
     @Generated

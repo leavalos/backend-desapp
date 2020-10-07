@@ -1,8 +1,15 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
+import javax.persistence.*
 import lombok.Generated
 
+@Entity
 class Location {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+
 
     @Generated
     private var name:String
@@ -12,7 +19,10 @@ class Location {
     private var population: Int
     @Generated
     private var hasConnection: Boolean
+
+    @OneToOne
     @Generated
+
     private var project: Project?
 
     constructor(name:String, province:Province, population:Int, hasConnection:Boolean){

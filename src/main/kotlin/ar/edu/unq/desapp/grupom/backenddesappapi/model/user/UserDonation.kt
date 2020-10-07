@@ -3,9 +3,14 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import java.time.LocalDateTime
+import javax.persistence.Entity
+import javax.persistence.OneToMany
+
+@Entity
 class UserDonation : User {
 
     var points: Double = 00.00
+    @OneToMany
     var madeDonations:MutableList<Donation> = mutableListOf()
 
     constructor(mail:String, password:String, nickName:String): super(mail, password, nickName)
