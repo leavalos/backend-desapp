@@ -14,9 +14,10 @@ class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
-    @OneToMany
+
     @Generated
     var name: String
+    @OneToMany
     @Generated
     var donations: MutableList<Donation>
     @Generated
