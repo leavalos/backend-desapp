@@ -1,7 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.builders.DonationBuilder
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

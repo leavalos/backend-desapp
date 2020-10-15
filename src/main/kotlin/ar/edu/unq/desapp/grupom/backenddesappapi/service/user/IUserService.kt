@@ -15,5 +15,5 @@ interface IUserService {
 
     fun getUserById(userId: Long): User
 
-    fun createUserDonation(user: UserDonation)
+    fun createUserDonation(user: UserDonation): User
 }

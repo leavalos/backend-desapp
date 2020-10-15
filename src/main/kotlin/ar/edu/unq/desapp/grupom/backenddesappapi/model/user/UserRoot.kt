@@ -11,8 +11,6 @@ import javax.persistence.InheritanceType
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 class UserRoot(mail: String, password: String, nickName: String) : User(mail, password, nickName) {
 
-    private val isRoot: Boolean = true
-
     override fun finishProject(location: Location) {
         try {
             location.project()?.finishProject()
@@ -31,5 +29,4 @@ class UserRoot(mail: String, password: String, nickName: String) : User(mail, pa
 
         return Project(name, moneyFactor, beginningDate, finishDate, 0, minPercentage)
     }
-
 }

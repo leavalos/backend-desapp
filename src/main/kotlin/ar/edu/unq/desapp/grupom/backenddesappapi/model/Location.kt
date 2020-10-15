@@ -10,7 +10,6 @@ class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
 
-
     @Generated
     private var name:String
     @Generated
@@ -69,7 +68,6 @@ class Location {
         this.project = project
         project.setPopulation(this.population)
     }
-
 
     fun totalBudgedRequired() : Double {
         return this.project!!.totalBudgedRequired()

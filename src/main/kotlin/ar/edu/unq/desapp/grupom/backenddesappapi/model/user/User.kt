@@ -6,20 +6,28 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import lombok.Generated
 import java.time.LocalDate
 import java.util.regex.Pattern.compile
 import javax.persistence.*
 
-@MappedSuperclass
-abstract class User(private var mail: String, private var password: String, private var nickName: String) {
+@Entity
+abstract class User(
+        @Generated
+        open var mail: String,
+
+        @Generated
+        open var password: String,
+
+        @Generated
+        open var nickName: String) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Long? = null
 
     init {
-        this.validateEmail(mail)
+        this.validateMail()
     }
 
     open fun setId(id: Long) {
@@ -30,7 +38,7 @@ abstract class User(private var mail: String, private var password: String, priv
         return this.id!!
     }
 
-    fun isEmail(email : String) : Boolean {
+    fun isMail(email : String) : Boolean {
         return compile(
                 "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                         "\\@" +
@@ -42,29 +50,25 @@ abstract class User(private var mail: String, private var password: String, priv
         ).matcher(email).matches()
     }
 
-    fun validateEmail(email: String) {
-        if (!this.isEmail(email)) {
-            throw InvalidEmailException(email)
+    fun validateMail() {
+        if (!this.isMail(mail)) {
+            throw InvalidEmailException(mail)
         }
     }
 
-    fun mail() : String {
+    open fun obtainMail() : String {
         return this.mail
     }
 
-    open fun password() : String {
-        return  this.password
+    open fun obtainPassword() : String {
+        return this.password
     }
 
-    fun nickname() : String {
+    open fun obtainNickName() : String {
         return this.nickName
     }
 
-    open fun setPassword(aPassword : String)  {
-        this.password = aPassword
-    }
-
-    fun setNickname(aNickname :  String) {
+    open fun setNickname(aNickname :  String) {
         this.nickName = aNickname
     }
 

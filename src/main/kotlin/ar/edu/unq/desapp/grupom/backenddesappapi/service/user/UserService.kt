@@ -28,13 +28,12 @@ class UserService: IUserService{
         return userRepository.findById(userId).orElseThrow { UserNotFoundException() }
     }
 
-    override fun createUserDonation(user: UserDonation) {
-
-
-        UserValidator.validateUser(user.mail(), user.password(), user.nickname())
-        this.checkIfEmailAlreadyExists(user.mail())
-        val userDonation = UserDonation(user.mail(), user.password(), user.nickname())
+    override fun createUserDonation(user: UserDonation): User {
+        UserValidator.validateUser(user.obtainMail(), user.obtainPassword(), user.obtainNickName())
+        this.checkIfEmailAlreadyExists(user.obtainMail())
+        val userDonation = UserDonation(user.obtainMail(), user.obtainPassword(), user.obtainNickName())
         this.addUser(userDonation)
+        return userDonation
     }
 
     override fun putUser(userId: Long, newUser: User) {
