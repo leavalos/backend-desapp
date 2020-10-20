@@ -1,16 +1,25 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.service.user
 
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.UserNotFoundException
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserValidator
 import ar.edu.unq.desapp.grupom.backenddesappapi.persistence.user.UserRepository
+import ar.edu.unq.desapp.grupom.backenddesappapi.service.donation.DonationService
+import ar.edu.unq.desapp.grupom.backenddesappapi.service.project.ProjectService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService: IUserService{
+
+    @Autowired
+    lateinit var donationService: DonationService
+
+    @Autowired
+    lateinit var projectService: ProjectService
 
     @Autowired
     lateinit var userRepository: UserRepository
@@ -37,12 +46,25 @@ class UserService: IUserService{
     }
 
     override fun getByMail(email: String): User {
-        val user = userRepository.findByEmail(email)
+        val user: User? = userRepository.findByEmail(email)
         if (user != null) {
             return user
         }
         else {
             throw UserNotFoundException()
+        }
+    }
+
+    override fun makeDonation(donationData: Donation): Donation? {
+        try {
+            val userDonor = userRepository.findByUsername(donationData.nickname)
+            val projectToDonate = projectService.findByName(donationData.projectName)
+            val donationCreated = userDonor.donate(
+                    donationData.money, donationData.comment, projectToDonate)
+            donationService.addDonation(donationCreated)
+            return donationCreated
+        } catch (e: Exception) {
+            throw e
         }
     }
 

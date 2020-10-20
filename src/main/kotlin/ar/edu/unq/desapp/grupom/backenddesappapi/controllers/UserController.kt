@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.controllers
 
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.user.UserService
@@ -29,7 +30,6 @@ class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userDonationCreated)
     }
 
-    //ToDo: loginUser
     @GetMapping("/login")
     fun loginUser(@RequestParam mail: String, @RequestParam password: String):
             ResponseEntity<Any> {
@@ -41,6 +41,13 @@ class UserController {
         }
     }
 
-    //ToDo: getUser
-    //ToDo: makeDonation
+    @PostMapping("/donation")
+    fun makeDonation(@RequestBody donationData: Donation): ResponseEntity<Any> {
+        return try {
+            val donationCreated = userService.makeDonation(donationData)
+            ResponseEntity.status(HttpStatus.CREATED).body(donationCreated)
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
 }

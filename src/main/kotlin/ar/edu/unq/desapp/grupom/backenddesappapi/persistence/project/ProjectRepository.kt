@@ -13,8 +13,10 @@ interface ProjectRepository : JpaRepository<Project, Long> {
     @Query(value = "SELECT * FROM PROJECT p WHERE p.IS_FINISHED = False", nativeQuery = true)
     fun getOpenProjects(): List<Project>
 
-
     @Query(value = "SELECT * FROM PROJECT p WHERE MONTH(p.FINISH_DATE) = MONTH(:currentDate)", nativeQuery = true)
     fun getCurrentMonthProjects(@Param("currentDate") currentDate: LocalDate = LocalDate.now()): List<Project>
+
+    @Query(nativeQuery = true, value = "SELECT * FROM PROJECT WHERE NAME = :projectName")
+    fun findByName(projectName: String): Project
 
 }

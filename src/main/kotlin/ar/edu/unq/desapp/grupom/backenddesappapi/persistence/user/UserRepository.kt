@@ -20,5 +20,8 @@ interface UserRepository  : JpaRepository<User, Long> {
     fun checkIfEmailAlreadyExists(email: String) : Boolean
 
     @Query(nativeQuery= true, value = "SELECT * FROM USER WHERE MAIL = :email")
-    fun findByEmail(email: String): User
+    fun findByEmail(email: String): User?
+
+    @Query(nativeQuery = true, value = "SELECT * FROM USER WHERE NICK_NAME = :nickName")
+    fun findByUsername(nickName: String): User
 }

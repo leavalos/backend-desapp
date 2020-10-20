@@ -13,6 +13,7 @@ class Location {
     @Generated
     private var name:String
     @Generated
+    @Enumerated(EnumType.STRING)
     private var province:Province
     @Generated
     private var population: Int

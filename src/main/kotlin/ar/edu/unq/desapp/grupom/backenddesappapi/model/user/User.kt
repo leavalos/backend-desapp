@@ -76,7 +76,7 @@ abstract class User(
         throw DoNotHaveDonationPrivilege()
     }
 
-    open fun donate(money: Double, comment: String, project: Project) {
+    open fun donate(money: Double, comment: String, project: Project): Donation {
         throw DoNotHaveDonationPrivilege()
     }
 

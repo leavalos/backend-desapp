@@ -18,9 +18,10 @@ open class UserDonation(mail: String, password: String, nickName: String) : User
         this.points += points
     }
 
-    override fun donate(money: Double, comment: String, project: Project) {
+    override fun donate(money: Double, comment: String, project: Project): Donation {
         val donation = Donation(money, comment, this.obtainNickName(), LocalDateTime.now(), project.name)
         project.receiveDonationFrom(this, donation)
+        return donation
     }
 
     override fun addDonation(donation: Donation) {
