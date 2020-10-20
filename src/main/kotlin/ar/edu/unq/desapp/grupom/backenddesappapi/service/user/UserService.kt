@@ -36,6 +36,16 @@ class UserService: IUserService{
         return userDonation
     }
 
+    override fun getByMail(email: String): User {
+        val user = userRepository.findByEmail(email)
+        if (user != null) {
+            return user
+        }
+        else {
+            throw UserNotFoundException()
+        }
+    }
+
     override fun putUser(userId: Long, newUser: User) {
         val foundUser = this.getUserById(userId)
         newUser.setId(foundUser.getId())

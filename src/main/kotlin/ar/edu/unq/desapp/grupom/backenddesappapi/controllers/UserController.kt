@@ -5,7 +5,6 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -29,4 +28,19 @@ class UserController {
         val userDonationCreated = userService.createUserDonation(user)
         return ResponseEntity.status(HttpStatus.CREATED).body(userDonationCreated)
     }
+
+    //ToDo: loginUser
+    @GetMapping("/login")
+    fun loginUser(@RequestParam mail: String, @RequestParam password: String):
+            ResponseEntity<Any> {
+        return try {
+            val userLogged: User = userService.getByMail(mail)
+            ResponseEntity.ok(userLogged)
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
+
+    //ToDo: getUser
+    //ToDo: makeDonation
 }
