@@ -9,6 +9,7 @@ interface IProjectService {
 
     fun getCurrentMonthProjects(): List<Project>
 
-    fun s(p: Project)
+    fun findByName(name: String): Project
+
 
 }

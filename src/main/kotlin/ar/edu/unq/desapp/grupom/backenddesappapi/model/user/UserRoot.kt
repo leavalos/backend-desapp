@@ -29,5 +29,4 @@ class UserRoot(mail: String, password: String, nickName: String) : User(mail, pa
 
         return Project(name, moneyFactor, beginningDate, finishDate, 0, minPercentage)
     }
-
 }

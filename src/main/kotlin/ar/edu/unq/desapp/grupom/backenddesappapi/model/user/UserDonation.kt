@@ -2,30 +2,26 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-
 import java.time.LocalDateTime
-import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.OneToMany
 
 @Entity
-class UserDonation : User {
+open class UserDonation(mail: String, password: String, nickName: String) : User(mail, password, nickName) {
 
     open var points: Double = 00.00
 
-    @OneToMany(cascade = [CascadeType.ALL])
-    var madeDonations:MutableList<Donation> = mutableListOf()
-
-    constructor(mail:String, password:String, nickName:String): super(mail, password, nickName)
-
+    @OneToMany
+    open var madeDonations:MutableList<Donation> = mutableListOf()
 
     override fun earnPoints(points: Double) {
         this.points += points
     }
 
-    override fun donate(money: Double, comment: String, project: Project) {
-        val donation = Donation(money, comment, this.nickname(), LocalDateTime.now(), project.name)
+    override fun donate(money: Double, comment: String, project: Project): Donation {
+        val donation = Donation(money, comment, this.obtainNickName(), LocalDateTime.now(), project.name)
         project.receiveDonationFrom(this, donation)
+        return donation
     }
 
     override fun addDonation(donation: Donation) {
@@ -47,6 +43,5 @@ class UserDonation : User {
     override fun countDonationsMadeInThisMonth(): Int {
         return this.madeDonations.count { donation -> donation.hasBeenMadeInTheCurrentMonth() }
     }
-
 
 }

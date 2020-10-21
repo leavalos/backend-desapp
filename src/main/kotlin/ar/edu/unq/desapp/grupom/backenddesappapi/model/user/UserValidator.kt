@@ -13,7 +13,7 @@ object UserValidator {
     It doesn't contain any white space.
     */
     private val passwordRegEx =
-            """^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,20}$"""
+            """^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?])(?=\S+$).{8,20}$"""
                     .toRegex()
 
     /*
@@ -27,18 +27,18 @@ object UserValidator {
             """^(?=.*[a-z])(?=.*[A-Z])(?=\S+$)(?=.{0}[^\W_]).{3,16}$"""
                     .toRegex()
 
-    private val emailRegEx: Regex =
+    private val mailRegEx: Regex =
             """^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$"""
                     .toRegex()
 
-    fun validateUser(email: String, password: String, nickname: String) {
-        this.validateMail(email)
+    fun validateUser(mail: String, password: String, nickname: String) {
+        this.validateMail(mail)
         this.validatePassword(password)
         this.validateNickname(nickname)
     }
 
     private fun validateMail(mail: String) {
-        if (!this.emailRegEx.matches(mail)) {
+        if (!this.mailRegEx.matches(mail)) {
             throw InvalidEmailFormatException(mail)
         }
     }
