@@ -9,6 +9,6 @@ interface IProjectService {
 
     fun getCurrentMonthProjects(): List<Project>
 
-
+    fun s(p: Project)
 
 }

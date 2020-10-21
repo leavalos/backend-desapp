@@ -18,4 +18,9 @@ class ProjectService : IProjectService {
     override fun getCurrentMonthProjects(): List<Project> {
         return projectRepository.getCurrentMonthProjects()
     }
+
+    override fun s(p: Project) {
+        projectRepository.save(p)
+    }
+
 }

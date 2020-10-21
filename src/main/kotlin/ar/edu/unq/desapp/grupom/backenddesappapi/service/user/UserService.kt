@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.service.user
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.UserNotFoundException
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserRoot
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserValidator
 import ar.edu.unq.desapp.grupom.backenddesappapi.persistence.user.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,12 +29,12 @@ class UserService: IUserService{
         return userRepository.findById(userId).orElseThrow { UserNotFoundException() }
     }
 
-    override fun createUserDonation(user: UserDonation) {
+    override fun createUserDonation(user: UserRoot) {
 
 
         UserValidator.validateUser(user.mail(), user.password(), user.nickname())
         this.checkIfEmailAlreadyExists(user.mail())
-        val userDonation = UserDonation(user.mail(), user.password(), user.nickname())
+        val userDonation = UserRoot(user.mail(), user.password(), user.nickname())
         this.addUser(userDonation)
     }
 

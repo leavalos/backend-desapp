@@ -69,7 +69,7 @@ class UserTest {
     @Test
     fun testSetPassword() {
         val user = UserBuilder.user().withPassword("password").buildUserDonation()
-        user.setPassword("password2")
+        user.changePassword("password2")
         Assert.assertEquals("password2", user.password())
     }
 

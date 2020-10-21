@@ -6,13 +6,16 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+import lombok.Generated
 import java.time.LocalDate
 import java.util.regex.Pattern.compile
 import javax.persistence.*
 
-@MappedSuperclass
-abstract class User(private var mail: String, private var password: String, private var nickName: String) {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+abstract class User(@Generated protected var mail: String, @Generated protected var password: String, @Generated protected var nickName: String) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +51,7 @@ abstract class User(private var mail: String, private var password: String, priv
         }
     }
 
-    fun mail() : String {
+    open fun mail() : String {
         return this.mail
     }
 
@@ -56,15 +59,15 @@ abstract class User(private var mail: String, private var password: String, priv
         return  this.password
     }
 
-    fun nickname() : String {
+    open fun nickname() : String {
         return this.nickName
     }
 
-    open fun setPassword(aPassword : String)  {
+    open fun changePassword(aPassword: String)  {
         this.password = aPassword
     }
 
-    fun setNickname(aNickname :  String) {
+    open fun setNickname(aNickname:  String) {
         this.nickName = aNickname
     }
 
