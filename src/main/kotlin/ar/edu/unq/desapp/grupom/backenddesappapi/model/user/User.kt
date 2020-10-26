@@ -6,21 +6,23 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
+import com.fasterxml.jackson.annotation.JsonAutoDetect
 import lombok.Generated
 import java.time.LocalDate
 import java.util.regex.Pattern.compile
 import javax.persistence.*
 
 @Entity
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 abstract class User(
         @Generated
-        open var mail: String,
+        protected open var mail: String,
 
         @Generated
-        open var password: String,
+        protected open var password: String,
 
         @Generated
-        open var nickName: String) {
+        protected open var nickName: String) {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

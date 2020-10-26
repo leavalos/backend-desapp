@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import java.time.LocalDateTime
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.OneToMany
 
 @Entity
@@ -11,7 +12,7 @@ open class UserDonation(mail: String, password: String, nickName: String) : User
 
     open var points: Double = 00.00
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     open var madeDonations:MutableList<Donation> = mutableListOf()
 
     override fun earnPoints(points: Double) {

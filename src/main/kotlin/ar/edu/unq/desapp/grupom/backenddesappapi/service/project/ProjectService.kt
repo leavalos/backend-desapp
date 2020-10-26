@@ -22,4 +22,9 @@ class ProjectService : IProjectService {
     override fun findByName(name: String): Project {
         return projectRepository.findByName(name)
     }
+
+    override fun addProject(project: Project): Project {
+       return projectRepository.save(project)
+    }
+
 }

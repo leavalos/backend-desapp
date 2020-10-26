@@ -2,11 +2,13 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
+import com.fasterxml.jackson.annotation.JsonAutoDetect
 import lombok.Generated
 import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 class Project {
 
 
@@ -17,7 +19,8 @@ class Project {
 
     @Generated
     var name: String
-    @OneToMany
+
+    @OneToMany(fetch = FetchType.EAGER)
     @Generated
     var donations: MutableList<Donation>
     @Generated
