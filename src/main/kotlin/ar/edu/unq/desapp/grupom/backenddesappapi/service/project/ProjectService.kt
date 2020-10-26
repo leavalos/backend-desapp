@@ -18,4 +18,8 @@ class ProjectService : IProjectService {
     override fun getCurrentMonthProjects(): List<Project> {
         return projectRepository.getCurrentMonthProjects()
     }
+
+    override fun findByName(name: String): Project {
+        return projectRepository.findByName(name)
+    }
 }
