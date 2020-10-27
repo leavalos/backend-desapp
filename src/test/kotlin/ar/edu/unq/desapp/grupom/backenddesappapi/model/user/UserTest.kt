@@ -38,21 +38,17 @@ class UserTest {
         Assert.assertEquals("password", user.obtainPassword())
     }
 
+
     @Test(expected = InvalidEmailException::class)
     fun userHasInvalidEmailThrowsInvalidEmailException() {
         UserBuilder.user().withMail("invalidEmail").buildUserDonation()
     }
 
-    @Test(expected = InvalidEmailException::class)
-    fun testInvalidEmail() {
-        myUser.mail = "invalidEmail"
-        this.myUser.validateMail()
-    }
 
     @Test
     fun testValidEmail() {
-        myUser.mail = "validEmail@gmail.com"
-        this.myUser.validateMail()
+        var validMailUser = UserBuilder.user().withMail("validEmail@gmail.com").buildUserDonation()
+        validMailUser.validateMail()
     }
 
     @Test
@@ -66,13 +62,6 @@ class UserTest {
         val user = UserBuilder.user().withNickName("myNickname").buildUserDonation()
         user.setNickname("myNickname2")
         Assert.assertEquals("myNickname2", user.obtainNickName())
-    }
-
-    @Test
-    fun testSetPassword() {
-        val user = UserBuilder.user().withPassword("password").buildUserDonation()
-        user.password = "password2"
-        Assert.assertEquals("password2", user.obtainPassword())
     }
 
     @Test (expected = DoNotHaveDonationPrivilege::class)
