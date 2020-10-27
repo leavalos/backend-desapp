@@ -1,5 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.controllers
 
+
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
@@ -10,9 +11,11 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
+
+
 @RestController
 @EnableAutoConfiguration
-@CrossOrigin(origins = [""], allowedHeaders = [""])
+@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
 class UserController {
 
     @Autowired
@@ -22,6 +25,7 @@ class UserController {
     fun getUsers(): ResponseEntity<List<User>> {
         val users = userService.getUsers()
         return ResponseEntity.status(HttpStatus.OK).body(users)
+
     }
 
     @PostMapping("/user")
@@ -50,4 +54,12 @@ class UserController {
             ResponseEntity.badRequest().body(e.message)
         }
     }
+
+
+    @RequestMapping("/user/{id}")
+    fun getUserById(@PathVariable("id") id: String): ResponseEntity<User> {
+        val userId = id.toLong()
+        return ResponseEntity<User>(userService.getUserById(userId), HttpStatus.OK)
+    }
+
 }

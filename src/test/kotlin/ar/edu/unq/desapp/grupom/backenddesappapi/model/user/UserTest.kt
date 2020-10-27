@@ -38,6 +38,7 @@ class UserTest {
         Assert.assertEquals("password", user.obtainPassword())
     }
 
+
     @Test(expected = InvalidEmailException::class)
     fun userHasInvalidEmailThrowsInvalidEmailException() {
         UserBuilder.user().withMail("invalidEmail").buildUserDonation()
