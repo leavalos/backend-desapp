@@ -43,11 +43,6 @@ class UserTest {
         UserBuilder.user().withMail("invalidEmail").buildUserDonation()
     }
 
-    @Test(expected = InvalidEmailException::class)
-    fun testInvalidEmail() {
-        var invalidMailUser = UserBuilder.user().withMail("invalidEmail").buildUserDonation()
-        invalidMailUser.validateMail()
-    }
 
     @Test
     fun testValidEmail() {
@@ -68,12 +63,6 @@ class UserTest {
         Assert.assertEquals("myNickname2", user.obtainNickName())
     }
 
-    @Test
-    fun testSetPassword() {
-        val user = UserBuilder.user().withPassword("password").buildUserDonation()
-        user.password = "password2"
-        Assert.assertEquals("password2", user.obtainPassword())
-    }
 
     @Test (expected = DoNotHaveDonationPrivilege::class)
     fun testAddDonation() {
