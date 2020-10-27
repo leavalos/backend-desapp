@@ -45,14 +45,14 @@ class UserTest {
 
     @Test(expected = InvalidEmailException::class)
     fun testInvalidEmail() {
-        myUser.mail = "invalidEmail"
-        this.myUser.validateMail()
+        var invalidMailUser = UserBuilder.user().withMail("invalidEmail").buildUserDonation()
+        invalidMailUser.validateMail()
     }
 
     @Test
     fun testValidEmail() {
-        myUser.mail = "validEmail@gmail.com"
-        this.myUser.validateMail()
+        var validMailUser = UserBuilder.user().withMail("validEmail@gmail.com").buildUserDonation()
+        validMailUser.validateMail()
     }
 
     @Test
