@@ -1,6 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.controllers
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.builders.UserBuilder
+
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.time.LocalDateTime
+
 
 @RestController
 @EnableAutoConfiguration

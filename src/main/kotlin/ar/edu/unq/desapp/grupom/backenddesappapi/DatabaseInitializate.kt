@@ -3,7 +3,6 @@ package ar.edu.unq.desapp.grupom.backenddesappapi
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserRoot
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.project.ProjectService
