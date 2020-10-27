@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @EnableAutoConfiguration
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
+
 class ProjectController {
 
     @Autowired

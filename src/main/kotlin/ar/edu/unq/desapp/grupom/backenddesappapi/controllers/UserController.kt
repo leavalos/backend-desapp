@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 
+
 @RestController
 @EnableAutoConfiguration
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
@@ -24,6 +25,7 @@ class UserController {
     fun getUsers(): ResponseEntity<List<User>> {
         val users = userService.getUsers()
         return ResponseEntity.status(HttpStatus.OK).body(users)
+
     }
 
     @PostMapping("/user")
@@ -53,11 +55,11 @@ class UserController {
         }
     }
 
+
     @RequestMapping("/user/{id}")
     fun getUserById(@PathVariable("id") id: String): ResponseEntity<User> {
         val userId = id.toLong()
         return ResponseEntity<User>(userService.getUserById(userId), HttpStatus.OK)
     }
-
 
 }

@@ -12,7 +12,9 @@ open class UserDonation(mail: String, password: String, nickName: String) : User
 
     open var points: Double = 00.00
 
+
     @OneToMany(fetch = FetchType.EAGER)
+
     open var madeDonations:MutableList<Donation> = mutableListOf()
 
     override fun earnPoints(points: Double) {

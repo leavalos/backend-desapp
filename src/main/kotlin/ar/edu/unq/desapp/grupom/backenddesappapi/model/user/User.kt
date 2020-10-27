@@ -7,6 +7,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHave
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
 import com.fasterxml.jackson.annotation.JsonAutoDetect
+
 import lombok.Generated
 import java.time.LocalDate
 import java.util.regex.Pattern.compile
@@ -23,6 +24,7 @@ abstract class User(
 
         @Generated
         protected open var nickName: String) {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

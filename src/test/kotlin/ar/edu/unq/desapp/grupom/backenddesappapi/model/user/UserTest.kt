@@ -64,6 +64,7 @@ class UserTest {
         Assert.assertEquals("myNickname2", user.obtainNickName())
     }
 
+
     @Test (expected = DoNotHaveDonationPrivilege::class)
     fun testAddDonation() {
         val user = Mockito.mock(User::class.java)

@@ -6,6 +6,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserValidator
 import ar.edu.unq.desapp.grupom.backenddesappapi.persistence.project.ProjectRepository
+
 import ar.edu.unq.desapp.grupom.backenddesappapi.persistence.user.UserRepository
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.donation.DonationService
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.project.ProjectService
@@ -26,6 +27,7 @@ class UserService: IUserService{
     lateinit var projectRepository: ProjectRepository
 
     @Autowired
+
     lateinit var userRepository: UserRepository
 
     override fun getUsers(): List<User> {
@@ -68,6 +70,7 @@ class UserService: IUserService{
             donationService.addDonation(donationCreated)
             userRepository.save(userDonor)
             projectRepository.save(projectToDonate)
+
 
             return donationCreated
         } catch (e: Exception) {
