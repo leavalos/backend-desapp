@@ -25,7 +25,7 @@ class UserController {
     @GetMapping("/users")
     fun getUsers(): ResponseEntity<List<User>> {
         val start = System.currentTimeMillis()
-        logger.info("Using UserController.getUsers function")
+        logger.info("Using UserController.getUsers() function")
 
         val users = userService.getUsers()
         val response = ResponseEntity.status(HttpStatus.OK).body(users)
@@ -39,7 +39,8 @@ class UserController {
     @PostMapping("/user")
     fun createUserDonation(@RequestBody user: UserDonation): ResponseEntity<User> {
         val start = System.currentTimeMillis()
-        logger.info("Using UserController.createUserDonation function")
+        logger.info("Using UserController.createUserDonation(user: UserDonation) function")
+        logger.info("Parameters: user: $user")
 
         val userDonationCreated = userService.createUserDonation(user)
         val response = ResponseEntity.status(HttpStatus.CREATED).body(userDonationCreated)
@@ -54,8 +55,8 @@ class UserController {
     fun loginUser(@RequestParam mail: String, @RequestParam password: String):
             ResponseEntity<Any> {
         val start = System.currentTimeMillis()
-        logger.info("Using UserController.loginUser function")
-        logger.info("User: $mail")
+        logger.info("Using UserController.loginUser(mail: String, password: String) function")
+        logger.info("Parameters: mail: $mail, password: $password")
         return try {
             val userLogged: User = userService.getByMail(mail)
             val end = System.currentTimeMillis()
@@ -71,7 +72,7 @@ class UserController {
     @PostMapping("/donation")
     fun makeDonation(@RequestBody donationData: Donation): ResponseEntity<Any> {
         val start = System.currentTimeMillis()
-        logger.info("Using UserController.makeDonation function")
+        logger.info("Using UserController.makeDonation(donationData: Donation) function")
         return try {
             val donationCreated = userService.makeDonation(donationData)
             val end = System.currentTimeMillis()
@@ -87,9 +88,9 @@ class UserController {
     @RequestMapping("/user/{id}")
     fun getUserById(@PathVariable("id") id: String): ResponseEntity<User> {
         val start = System.currentTimeMillis()
-        logger.info("Using UserController.getUserById function")
+        logger.info("Using UserController.getUserById(id: String) function")
         val userId = id.toLong()
-        logger.info("User ID: $userId")
+        logger.info("Parameters: id: $userId")
         val response = ResponseEntity<User>(userService.getUserById(userId), HttpStatus.OK)
         val end = System.currentTimeMillis()
         logger.info("UserController.getUserById takes: ${end - start} ms")
