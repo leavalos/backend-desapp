@@ -32,6 +32,7 @@ dependencies {
 	implementation ("org.springframework.boot:spring-boot-starter-web")
 	implementation ("org.springframework.boot:spring-boot-starter-logging")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-mail")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude (group= "org.junit.vintage", module= "junit-vintage-engine")
 	}
