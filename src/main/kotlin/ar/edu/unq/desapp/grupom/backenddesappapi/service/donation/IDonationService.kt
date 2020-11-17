@@ -7,4 +7,6 @@ interface IDonationService {
 
     @Transactional
     fun addDonation(aDonation: Donation)
+
+    fun donationTopTen(): List<Donation>
 }

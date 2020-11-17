@@ -14,4 +14,8 @@ class DonationService: IDonationService {
     override fun addDonation(aDonation: Donation) {
         donationRepository.save(aDonation)
     }
+
+    override fun donationTopTen(): List<Donation> {
+        return donationRepository.donationTopTen()
+    }
 }
