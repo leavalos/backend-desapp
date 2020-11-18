@@ -20,9 +20,8 @@ class Location {
     @Generated
     private var hasConnection: Boolean
 
-    @OneToOne
+    @OneToOne(cascade=[CascadeType.ALL], fetch = FetchType.EAGER)
     @Generated
-
     private var project: Project?
 
     constructor(name:String, province:Province, population:Int, hasConnection:Boolean){

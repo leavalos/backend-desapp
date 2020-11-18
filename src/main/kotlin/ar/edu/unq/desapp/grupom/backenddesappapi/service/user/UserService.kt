@@ -91,4 +91,9 @@ class UserService: IUserService{
     private fun checkIfEmailAlreadyExists(email: String) : Boolean {
         return this.userRepository.checkIfEmailAlreadyExists(email)
     }
+
+
+    fun userDonation(): List<String> {
+        return this.userRepository.userDonation()
+    }
 }

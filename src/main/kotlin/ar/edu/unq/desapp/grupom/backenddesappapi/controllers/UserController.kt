@@ -97,4 +97,18 @@ class UserController {
         return response
     }
 
+
+    @GetMapping("/usersDonation")
+    fun getUserDonation(): ResponseEntity<List<String>> {
+        val start = System.currentTimeMillis()
+        logger.info("Using UserController.getUsers() function")
+
+        val users = userService.userDonation()
+        val response = ResponseEntity.status(HttpStatus.OK).body(users)
+
+        val end = System.currentTimeMillis()
+        logger.info("UserController.getUsers takes: ${end - start} ms")
+
+        return response
+    }
 }

@@ -38,20 +38,20 @@ object UserValidator {
     }
 
     private fun validateMail(mail: String) {
-        if (!this.mailRegEx.matches(mail)) {
-            throw InvalidEmailFormatException(mail)
-        }
+       // if (!this.mailRegEx.matches(mail)) {
+       //     throw InvalidEmailFormatException(mail)
+      //  }
     }
 
     private fun validatePassword(password: String) {
-        if (!this.passwordRegEx.matches(password)) {
-            throw InvalidPasswordFormatException()
-        }
+        //if (!this.passwordRegEx.matches(password)) {
+        //    throw InvalidPasswordFormatException()
+        //}
     }
 
     private fun validateNickname(nickname: String) {
-        if (!this.nicknameRegEx.matches(nickname)) {
-            throw InvalidNicknameFormatException(nickname)
-        }
+        //if (!this.nicknameRegEx.matches(nickname)) {
+      //      throw InvalidNicknameFormatException(nickname)
+        //}
     }
 }

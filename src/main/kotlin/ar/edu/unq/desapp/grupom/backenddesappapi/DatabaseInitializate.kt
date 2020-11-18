@@ -2,9 +2,12 @@ package ar.edu.unq.desapp.grupom.backenddesappapi
 
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Province
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserRoot
+import ar.edu.unq.desapp.grupom.backenddesappapi.service.location.LocationService
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.project.ProjectService
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,6 +25,9 @@ class DatabaseInitializate : CommandLineRunner {
     @Autowired
     private lateinit var projectService: ProjectService
 
+    @Autowired
+    private  lateinit var locationService: LocationService
+
 
     override fun run(vararg args: String?) {
         this.createUserDonations()
@@ -36,10 +42,63 @@ class DatabaseInitializate : CommandLineRunner {
 
         var projects = projectService.getOpenProjects()
 
+
+
         projects.forEach { project ->
             var donation = Donation(5000.00, "Estoy donando a todos los projects abiertos.",
                     user1.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
+
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+
+        projects.subList(0, 1).forEach { project ->
+            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+                    user2.obtainNickName(), LocalDateTime.now(), project.name)
+            userService.makeDonation(donation) }
+
 
         projects.subList(0, 5).forEach { project ->
             var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
@@ -91,6 +150,9 @@ class DatabaseInitializate : CommandLineRunner {
     }
 
     fun createProjects() {
+
+
+
         var project1: Project = Project("Conectando San Pedro", LocalDate.now(), LocalDate.now().plusMonths(3), 500)
         var project2: Project = Project("Conectividad X San Cayetano", 2000.00,LocalDate.now(), LocalDate.now().plusMonths(3), 900, 90)
         var project3: Project = Project("Internet para 9 de Julio", LocalDate.now(), LocalDate.now().plusWeeks(2), 530)
@@ -99,9 +161,20 @@ class DatabaseInitializate : CommandLineRunner {
         var project6: Project = Project("Piedritas blancas unida", LocalDate.now().minusDays(5), LocalDate.now().plusMonths(3), 900)
         var project7: Project = Project("Conectatar a San Marruecos", LocalDate.now().minusWeeks(2), LocalDate.now().plusMonths(3), 175)
         var project8: Project = Project("Mercedes del Tuyu", LocalDate.now(), LocalDate.now().plusMonths(7), 220)
-        var project9: Project = Project("Conectando a Villa Apache", LocalDate.now(), LocalDate.now().plusDays(1), 700)
+        var project9: Project = Project("Conectando a Villa Apache de Arroyito", LocalDate.now(), LocalDate.now().plusDays(1), 700)
         var project10: Project = Project("Internet para San Valle de Catamarca", LocalDate.now(), LocalDate.now().plusMonths(1), 1700)
+        var project11: Project = Project("Internet para San Valle de Catamarca1", LocalDate.now(), LocalDate.now().plusMonths(1), 1700)
+        var project12: Project = Project("Internet para San Valle de Catamarca2", LocalDate.now(), LocalDate.now().plusMonths(1), 1700)
+        var project13: Project = Project("Internet para San Valle de Catamarca3", LocalDate.now(), LocalDate.now().plusMonths(1), 1700)
+        var project14: Project = Project("Internet para San Valle de Catamarca4", LocalDate.now(), LocalDate.now().plusMonths(1), 1700)
+        var project15: Project = Project("Internet para San Valle de Catamarca5", LocalDate.now(), LocalDate.now().plusMonths(1), 1700)
+        var project16: Project = Project("Internet para San Valle de Catamarca6", LocalDate.now(), LocalDate.now().plusMonths(1), 1700)
 
+        var location = Location("San juan", Province.SanJuan, 1000, false)
+
+
+        location.assignProject(project1)
+        locationService.addLocation(location)
 
         projectService.addProject(project1)
         projectService.addProject(project2)
@@ -113,6 +186,13 @@ class DatabaseInitializate : CommandLineRunner {
         projectService.addProject(project8)
         projectService.addProject(project9)
         projectService.addProject(project10)
-
+        projectService.addProject(project11)
+        projectService.addProject(project12)
+        projectService.addProject(project13)
+        projectService.addProject(project14)
+        projectService.addProject(project15)
+        projectService.addProject(project16)
     }
+
+
 }

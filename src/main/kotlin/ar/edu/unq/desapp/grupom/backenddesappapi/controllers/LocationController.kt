@@ -25,7 +25,7 @@ class LocationController {
     @GetMapping("/toptenforgottenlocations")
     fun topTenForgottenLocations(): ResponseEntity<Any> {
         return try {
-            val responseBody: List<Location> = locationService.topTenForgottenLocations()
+            val responseBody: List<String> = locationService.topTenForgottenLocations()
             ResponseEntity.ok(responseBody)
         } catch (e: Exception) {
             ResponseEntity.badRequest().body(e.message)

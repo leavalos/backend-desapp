@@ -24,4 +24,8 @@ interface UserRepository  : JpaRepository<User, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM USER WHERE NICK_NAME = :nickName")
     fun findByUsername(nickName: String): User
+
+
+    @Query("SELECT s.nickName FROM User as s JOIN s.madeDonations")
+    fun userDonation(): List<String>
 }
