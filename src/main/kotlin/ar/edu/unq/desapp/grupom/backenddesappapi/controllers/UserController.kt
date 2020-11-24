@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @EnableAutoConfiguration
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
+// Manage the endpoints of the User business logic.
 class UserController {
 
     var logger: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -27,6 +28,7 @@ class UserController {
     lateinit var userService: UserService
 
     @GetMapping("/users")
+    // Obtain all users.
     fun getUsers(): ResponseEntity<List<User>> {
         val start = System.currentTimeMillis()
         logger.info("Using UserController.getUsers() function")
@@ -41,6 +43,7 @@ class UserController {
     }
 
     @PostMapping("/user")
+    // Create a new donor User.
     fun createUserDonation(@RequestBody user: UserDonation): ResponseEntity<User> {
         val start = System.currentTimeMillis()
         logger.info("Using UserController.createUserDonation(user: UserDonation) function")
@@ -57,6 +60,7 @@ class UserController {
     }
 
     @GetMapping("/login")
+    // Check the login of an User.
     fun loginUser(@RequestParam mail: String, @RequestParam password: String):
             ResponseEntity<Any> {
         val start = System.currentTimeMillis()
@@ -75,6 +79,7 @@ class UserController {
     }
 
     @PostMapping("/donation")
+    // Make a donation from a User to a Project.
     fun makeDonation(@RequestBody donationData: Donation): ResponseEntity<Any> {
         val start = System.currentTimeMillis()
         logger.info("Using UserController.makeDonation(donationData: Donation) function")
@@ -91,6 +96,7 @@ class UserController {
     }
 
     @RequestMapping("/user/{id}")
+    // Obtain a user by his ID.
     fun getUserById(@PathVariable("id") id: String): ResponseEntity<User> {
         val start = System.currentTimeMillis()
         logger.info("Using UserController.getUserById(id: String) function")
@@ -102,8 +108,8 @@ class UserController {
         return response
     }
 
-
     @GetMapping("/usersDonation")
+    // Obtain all donor users.
     fun getUserDonation(): ResponseEntity<List<String>> {
         val start = System.currentTimeMillis()
         logger.info("Using UserController.getUsers() function")

@@ -60,7 +60,7 @@ class ProjectService : IProjectService {
         return nicknames.map { userService.getMailByNickname(it) }
     }
 
-    override fun createAndAsssignProject(name: String, moneyFactor: Int?, minPercentage: Int?, date: LocalDate, locationId: Long) {
+    override fun createAndAssignProject(name: String, moneyFactor: Int?, minPercentage: Int?, date: LocalDate, locationId: Long) {
         val locationOP : Optional<Location> = locationRepository.findById(locationId)
         val location : Location = locationOP.get()
 

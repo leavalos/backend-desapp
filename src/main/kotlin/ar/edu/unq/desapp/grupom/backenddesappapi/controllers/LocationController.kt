@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @EnableAutoConfiguration
 @CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
+// Manage the endpoints of the location business logic.
 class LocationController {
 
     var logger: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -21,8 +22,8 @@ class LocationController {
     @Autowired
     lateinit var locationService: ILocationService
 
-    // top ten locations that have not received donations for a long time
     @GetMapping("/toptenforgottenlocations")
+    // top ten locations that have not received donations for a long time
     fun topTenForgottenLocations(): ResponseEntity<Any> {
         val start = System.currentTimeMillis()
         logger.info("Using LocationController.topTenForgottenLocations() function")
@@ -38,8 +39,8 @@ class LocationController {
         }
     }
 
-    // top ten locations that have not received donations for a long time
     @GetMapping("/locations")
+    // return all locations without a project assigned.
     fun locations(): ResponseEntity<Any> {
         return try {
             val responseBody: List<Location> = locationService.locationsWithoutProject()

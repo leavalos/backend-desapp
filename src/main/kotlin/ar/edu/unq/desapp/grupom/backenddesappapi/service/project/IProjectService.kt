@@ -21,9 +21,9 @@ interface IProjectService {
 
     fun obtainDonorsFromAProject(project: Project): List<String>
 
-    fun createAndAsssignProject(name: String, moneyFactor: Int?,
-                                minPercentage: Int?, date : LocalDate,
-                                locationId: Long)
+    fun createAndAssignProject(name: String, moneyFactor: Int?,
+                               minPercentage: Int?, date : LocalDate,
+                               locationId: Long)
 
     fun closeProject(id : Long)
 
