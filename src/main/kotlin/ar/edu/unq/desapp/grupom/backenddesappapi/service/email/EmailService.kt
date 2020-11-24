@@ -9,8 +9,10 @@ import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSenderImpl
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
+// Implementation of a donation service.
 class EmailService: IEmailService {
 
     @Autowired
@@ -25,12 +27,41 @@ class EmailService: IEmailService {
     @Autowired
     private lateinit var javaMailSender: JavaMailSenderImpl
 
+    @Transactional
+    // Send a email from the admin to an user.
     override fun sendEmail(email: Email) {
         javaMailSender.javaMailProperties["mail.smtp.starttls.enable"] = "true"
         javaMailSender.javaMailProperties["mail.smtp.auth"] = "true"
         val mailMessage = prepareEmail(email)
 
         javaMailSender.send(mailMessage)
+    }
+
+    @Transactional
+    // Send a mail that notify the project is ended to all his contributors.
+    override fun sendMailThatProjectIsFinished(donorMails: List<String>, projectName: String) {
+        donorMails.forEach {
+            sendEmail(Email(
+                            it, "$projectName is finished",
+                            "With your contribution, now a Location is connected!")) }
+    }
+
+    @Transactional
+    // Send a mail that notify the user is registered successfully.
+    override fun sendEmailToRegisteredUser(userMail: String) {
+        sendEmail(Email(
+                userMail, "Welcome to our Crowdfunding page", "Thanks for your registration!"
+        ))
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 0 12 * * ?")
+    // Send a mail every day with info to all the registered users.
+    override fun sendDailyEmail(): String {
+        val emailMessage =
+                obtainEmailBody(obtainTopTenForgottenLocations(), obtainTopTenBestDonations())
+        sendMailToAllUsers(emailMessage)
+        return emailMessage
     }
 
     private fun prepareEmail(email: Email): SimpleMailMessage {
@@ -40,27 +71,6 @@ class EmailService: IEmailService {
         mailMessage.subject = email.subject
         mailMessage.text = email.message
         return mailMessage
-    }
-
-    override fun sendMailThatProjectIsFinished(donorMails: List<String>, projectName: String) {
-        donorMails.forEach {
-            sendEmail(Email(
-                            it, "$projectName is finished",
-                            "With your contribution, now a Location is connected!")) }
-    }
-
-    override fun sendEmailToRegisteredUser(userMail: String) {
-        sendEmail(Email(
-                userMail, "Welcome to our Crowdfunding page", "Thanks for your registration!"
-        ))
-    }
-
-    @Scheduled(cron = "0 0 12 * * ?")
-    override fun sendDailyEmail(): String {
-        val emailMessage =
-                obtainEmailBody(obtainTopTenForgottenLocations(), obtainTopTenBestDonations())
-        sendMailToAllUsers(emailMessage)
-        return emailMessage
     }
 
     private fun sendMailToAllUsers(emailMessage: String) {

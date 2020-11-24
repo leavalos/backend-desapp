@@ -8,12 +8,12 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.service.email.EmailService
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.*
 import java.util.*
 
 @Service
+// Implementation of a project service.
 class ProjectService : IProjectService {
 
     @Autowired
@@ -28,38 +28,45 @@ class ProjectService : IProjectService {
     @Autowired
     lateinit var locationRepository: LocationRepository
 
+    @Transactional
+    // Return all the projects that aren't finished.
     override fun getOpenProjects(): List<Project> {
         return projectRepository.getOpenProjects()
     }
 
+    @Transactional
+    // Return all the projects that ends this month.
     override fun getCurrentMonthProjects(): List<Project> {
         return projectRepository.getCurrentMonthProjects()
     }
 
+    @Transactional
+    // Return a project by his name.
     override fun findByName(name: String): Project {
         return projectRepository.findByName(name)
     }
 
+    @Transactional
+    // Return a project by his id.
     override fun findById(idProject: Long): Project {
         return projectRepository.findById(idProject).get()
     }
 
+    @Transactional
+    // Add a project to the database.
     override fun addProject(project: Project): Project {
        return projectRepository.save(project)
     }
 
-    override fun finishProject(idProject: Long) {
-        val project: Project = findById(idProject)
-        project.finishProject()
-        val donorMails: List<String> = obtainDonorsFromAProject(project)
-        emailService.sendMailThatProjectIsFinished(donorMails, project.name)
-    }
-
+    @Transactional
+    // Returns all the donors from a project.
     override fun obtainDonorsFromAProject(project: Project): List<String> {
         val nicknames = project.donations.map { it.nickname }
         return nicknames.map { userService.getMailByNickname(it) }
     }
 
+    @Transactional
+    // Create a new project and is assigned to a location.
     override fun createAndAssignProject(name: String, moneyFactor: Int?, minPercentage: Int?, date: LocalDate, locationId: Long) {
         val locationOP : Optional<Location> = locationRepository.findById(locationId)
         val location : Location = locationOP.get()
@@ -72,11 +79,14 @@ class ProjectService : IProjectService {
 
     }
 
+    @Transactional
+    // End a project.
     override fun closeProject(id: Long) {
-        val project = projectRepository.findById(id)
-        project.get().finishProjectRaisedMoney()
-
-        projectRepository.save(project.get())
+        val project = projectRepository.findById(id).get()
+        project.finishProjectRaisedMoney()
+        val donorMails: List<String> = obtainDonorsFromAProject(project)
+        emailService.sendMailThatProjectIsFinished(donorMails, project.name)
+        projectRepository.save(project)
     }
 
 }

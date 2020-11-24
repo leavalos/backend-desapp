@@ -67,7 +67,7 @@ class UserController {
         logger.info("Using UserController.loginUser(mail: String, password: String) function")
         logger.info("Parameters: mail: $mail, password: $password")
         return try {
-            val userLogged: User = userService.getByMail(mail)
+            val userLogged: User = userService.getUserByEmail(mail)
             val end = System.currentTimeMillis()
             logger.info("UserController.loginUser takes: ${end - start} ms")
             ResponseEntity.ok(userLogged)

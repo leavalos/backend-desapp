@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
+// Implementation of a user service.
 class UserService: IUserService{
 
     @Autowired
@@ -30,23 +31,34 @@ class UserService: IUserService{
 
     lateinit var userRepository: UserRepository
 
+    @Transactional
+    // Obtain all the users.
     override fun getUsers(): List<User> {
         return userRepository.findAll()
     }
 
     @Transactional
+    // Add a user to the database.
     override fun addUser(user: User) {
         userRepository.save(user)
     }
 
+
+    @Transactional
+    // Obtain a user by his id.
     override fun getUserById(userId: Long): User {
         return userRepository.findById(userId).orElseThrow { UserNotFoundException() }
     }
 
+
+    @Transactional
+    // Obtain a user by his mail.
     override fun getUserByEmail(email: String): User {
         return userRepository.findByEmail(email).orElseThrow { UserNotFoundException() }
     }
 
+    @Transactional
+    // Create a donor user.
     override fun createUserDonation(user: UserDonation): User {
         UserValidator.validateUser(user.obtainMail(), user.obtainPassword(), user.obtainNickName())
         this.checkIfEmailAlreadyExists(user.obtainMail())
@@ -55,16 +67,8 @@ class UserService: IUserService{
         return userDonation
     }
 
-    override fun getByMail(email: String): User {
-        val user: User? = userRepository.findByEmail(email).get()
-        if (user != null) {
-            return user
-        }
-        else {
-            throw UserNotFoundException()
-        }
-    }
-
+    @Transactional
+    // Make a donation from a user to a project.
     override fun makeDonation(donationData: Donation): Donation? {
         try {
             val userDonor = userRepository.findByUsername(donationData.nickname)
@@ -82,15 +86,20 @@ class UserService: IUserService{
         }
     }
 
+    @Transactional
+    // Obtain a mail from a user by his nickname.
     override fun getMailByNickname(nickname: String): String {
         return userRepository.findByUsername(nickname).obtainMail()
     }
 
+    @Transactional
+    // Add or update a user with determined id.
     override fun putUser(userId: Long, newUser: User) {
         val foundUser = this.getUserById(userId)
         newUser.setId(foundUser.getId())
     }
 
+    // Delete a user from the database.
     override fun deleteUser(userId: Long) {
         val foundUser = this.getUserById(userId)
         userRepository.delete(foundUser)
@@ -99,7 +108,6 @@ class UserService: IUserService{
     private fun checkIfEmailAlreadyExists(email: String) : Boolean {
         return this.userRepository.checkIfEmailAlreadyExists(email)
     }
-
 
     fun userDonation(): List<String> {
         return this.userRepository.userDonation()
