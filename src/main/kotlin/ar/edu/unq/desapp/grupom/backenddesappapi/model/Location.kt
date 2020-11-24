@@ -1,12 +1,29 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+import javax.persistence.*
+import lombok.Generated
+
+@Entity
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 class Location {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
 
+    @Generated
     private var name:String
+    @Generated
+    @Enumerated(EnumType.STRING)
     private var province:Province
+    @Generated
     private var population: Int
+    @Generated
     private var hasConnection: Boolean
+
+    @OneToOne(cascade=[CascadeType.ALL], fetch = FetchType.EAGER)
+    @Generated
     private var project: Project?
 
     constructor(name:String, province:Province, population:Int, hasConnection:Boolean){
@@ -29,7 +46,7 @@ class Location {
         return this.name
     }
 
-    fun pronvince() : Province {
+    fun province() : Province {
         return this.province
     }
 
@@ -53,7 +70,6 @@ class Location {
         this.project = project
         project.setPopulation(this.population)
     }
-
 
     fun totalBudgedRequired() : Double {
         return this.project!!.totalBudgedRequired()

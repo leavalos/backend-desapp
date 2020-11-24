@@ -6,9 +6,10 @@ before_install:
   - chmod +x gradle/wrapper/gradle-wrapper.jar
   - sudo apt-get install jq
   - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
-
-after_success:
-  - java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r target/jacoco/jacoco.xml
-
+before_script:
+  - chmod +x gradlew
 script:
-  - ./gradlew test build
+  - ./gradlew check
+  - ./gradlew jacocoTestReport
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

@@ -13,7 +13,7 @@ import org.junit.Test
 import java.time.LocalDateTime
 
 
-class TestUserDonation {
+class UserDonationTest {
 
     private lateinit var myUser: User
     private lateinit var myProject: Project
@@ -54,7 +54,7 @@ class TestUserDonation {
 
         val madeDonation = this.myUser.madeDonations().first()
 
-        Assert.assertEquals(this.myUser.nickname(), madeDonation.nickname)
+        Assert.assertEquals(this.myUser.obtainNickName(), madeDonation.nickname)
         Assert.assertEquals("My comment for my test donation", madeDonation.comment)
         Assert.assertEquals(this.myProject.name(), madeDonation.projectName)
         Assert.assertEquals(100.00, madeDonation.money, 00.00)

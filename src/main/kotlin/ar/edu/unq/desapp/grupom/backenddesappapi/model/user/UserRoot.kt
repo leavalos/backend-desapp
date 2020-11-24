@@ -3,12 +3,13 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import java.time.LocalDate
-import java.time.LocalDateTime
+import javax.persistence.Entity
+import javax.persistence.Inheritance
+import javax.persistence.InheritanceType
 
-
-class UserRoot : User {
-
-    constructor(mail:String, password:String, nickName:String): super(mail, password, nickName)
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+class UserRoot(mail: String, password: String, nickName: String) : User(mail, password, nickName) {
 
     override fun finishProject(location: Location) {
         try {
@@ -28,6 +29,4 @@ class UserRoot : User {
 
         return Project(name, moneyFactor, beginningDate, finishDate, 0, minPercentage)
     }
-
-
 }
