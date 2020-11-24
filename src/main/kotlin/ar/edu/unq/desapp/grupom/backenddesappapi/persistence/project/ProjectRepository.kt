@@ -8,15 +8,19 @@ import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
 @Repository
+// This repository manage queries from Project table.
 interface ProjectRepository : JpaRepository<Project, Long> {
 
     @Query("SELECT p FROM Location loc join loc.project as p WHERE p.isFinished = False")
+    // Returns all the not finished projects.
     fun getOpenProjects(): List<Project>
 
     @Query(value = "SELECT * FROM PROJECT p WHERE MONTH(p.FINISH_DATE) = MONTH(:currentDate)", nativeQuery = true)
+    // Returns all the projects that ends this month.
     fun getCurrentMonthProjects(@Param("currentDate") currentDate: LocalDate = LocalDate.now()): List<Project>
 
     @Query(nativeQuery = true, value = "SELECT * FROM PROJECT WHERE NAME = :projectName")
+    // Return a project by his name.
     fun findByName(projectName: String): Project
 
 }
