@@ -73,10 +73,14 @@ class ProjectService : IProjectService {
     }
 
     override fun closeProject(id: Long) {
-        val project = projectRepository.findById(id)
-        project.get().finishProjectRaisedMoney()
+        val project = projectRepository.findById(id).get()
+        project.finishProjectRaisedMoney()
 
-        projectRepository.save(project.get())
+
+        val donors = this.obtainDonorsFromAProject(project)
+        emailService.sendMailThatProjectIsFinished(donors, project.name)
+
+        projectRepository.save(project)
     }
 
 }

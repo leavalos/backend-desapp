@@ -144,7 +144,7 @@ class DatabaseInitializate : CommandLineRunner {
 
 
     fun createUserroot() : UserRoot{
-        val user = UserRoot("root@gmail.com", "root", "Admin")
+        val user = UserRoot("root@gmail.com", "root1234", "Admin")
         userService.addUser(user)
         return user
     }
