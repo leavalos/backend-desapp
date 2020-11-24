@@ -23,55 +23,47 @@ class UserTest {
     @Test
     fun userHasNickname() {
         val user = UserBuilder.user().withNickName("Test nickname").buildUserDonation()
-        Assert.assertEquals("Test nickname", user.nickname())
+        Assert.assertEquals("Test nickname", user.obtainNickName())
     }
 
     @Test
     fun userHasMail() {
         val user = UserBuilder.user().withMail("test@gmail.com").buildUserDonation()
-        Assert.assertEquals("test@gmail.com", user.mail())
+        Assert.assertEquals("test@gmail.com", user.obtainMail())
     }
 
     @Test
     fun userHasPassword() {
         val user = UserBuilder.user().withPassword("password").buildUserDonation()
-        Assert.assertEquals("password", user.password())
+        Assert.assertEquals("password", user.obtainPassword())
     }
+
 
     @Test(expected = InvalidEmailException::class)
     fun userHasInvalidEmailThrowsInvalidEmailException() {
         UserBuilder.user().withMail("invalidEmail").buildUserDonation()
     }
 
-    @Test(expected = InvalidEmailException::class)
-    fun testInvalidEmail() {
-        this.myUser.validateEmail("invalidEmail")
-    }
 
     @Test
     fun testValidEmail() {
-        this.myUser.validateEmail("validEmail@gmail.com")
+        var validMailUser = UserBuilder.user().withMail("validEmail@gmail.com").buildUserDonation()
+        validMailUser.validateMail()
     }
 
     @Test
     fun testIsMail() {
-        Assert.assertFalse(this.myUser.isEmail("invalidEmail"))
-        Assert.assertTrue(this.myUser.isEmail("validEmail@gmail.com"))
+        Assert.assertFalse(this.myUser.isMail("invalidEmail"))
+        Assert.assertTrue(this.myUser.isMail("validEmail@gmail.com"))
     }
 
     @Test
     fun testSetNickname() {
         val user = UserBuilder.user().withNickName("myNickname").buildUserDonation()
         user.setNickname("myNickname2")
-        Assert.assertEquals("myNickname2", user.nickname())
+        Assert.assertEquals("myNickname2", user.obtainNickName())
     }
 
-    @Test
-    fun testSetPassword() {
-        val user = UserBuilder.user().withPassword("password").buildUserDonation()
-        user.setPassword("password2")
-        Assert.assertEquals("password2", user.password())
-    }
 
     @Test (expected = DoNotHaveDonationPrivilege::class)
     fun testAddDonation() {

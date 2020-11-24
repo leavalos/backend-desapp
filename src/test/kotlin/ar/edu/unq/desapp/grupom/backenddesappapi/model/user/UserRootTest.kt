@@ -8,7 +8,9 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Location
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.TheFinishDateOfTheProjectHasNotPassedYetException
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import org.junit.Assert
 import org.junit.Before
@@ -78,7 +80,24 @@ class UserRootTest {
 
     @Test (expected = TheFinishDateOfTheProjectHasNotPassedYetException::class)
     fun testWhenUserWantsToFinishTheProjectButIsNotPossibleThenThrowsAnException() {
-        this.myLocation.assignProject(this.myProject)
+        val myMockedUser: User = mockk()
+        every { myMockedUser.addDonation(any()) } just Runs
+        every { myMockedUser.madeOneDonationInThisMonth()} returns false
+        every { myMockedUser.earnPoints(any())} just Runs
+        val myOneHundredThousandDonation: Donation = mockk()
+        every { myOneHundredThousandDonation.money } returns 100000.0
+
+        val myProjectBuilder = ProjectBuilder.project()
+        val june = LocalDate.of(2020, 6, 1)
+        val december = LocalDate.of(2020, 12,25)
+        val myProjectThatNotReachFinishDate: Project = myProjectBuilder
+        .withBeginningDate(june)
+                .withFinishDate(december)
+                .build()
+        myProjectThatNotReachFinishDate.receiveDonationFrom(myMockedUser, myOneHundredThousandDonation)
+
+
+        this.myLocation.assignProject(myProjectThatNotReachFinishDate)
         this.myUserRoot.finishProject(this.myLocation)
     }
 

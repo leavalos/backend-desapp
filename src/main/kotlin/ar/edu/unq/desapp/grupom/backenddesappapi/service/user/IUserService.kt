@@ -1,7 +1,8 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.service.user
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
+import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
 
 interface IUserService {
 
@@ -13,8 +14,15 @@ interface IUserService {
 
     fun deleteUser(userId: Long)
 
-    fun createUser(email: String, password: String, nickname: String)
+    fun getUserById(userId: Long): User
 
-    fun createProject(userId: Long, project: Project)
+    fun createUserDonation(user: UserDonation): User
 
+    fun getByMail(email: String): User
+
+    fun makeDonation(donationData: Donation): Donation?
+
+    fun getMailByNickname(nickname: String): String
+
+    fun getUserByEmail(email: String): User
 }

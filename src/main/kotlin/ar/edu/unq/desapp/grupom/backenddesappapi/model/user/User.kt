@@ -6,31 +6,35 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveDonationPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.DoNotHaveRootPrivilege
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailException
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+
+import lombok.Generated
 import java.time.LocalDate
 import java.util.regex.Pattern.compile
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-
-
+import javax.persistence.*
 
 @Entity
-abstract class User {
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+abstract class User(
+
+        @Generated
+        @Column(unique = true)
+        protected open var mail: String,
+
+        @Generated
+        protected open var password: String,
+
+        @Generated
+        @Column(unique = true)
+        protected open var nickName: String) {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open var id: Long? = null
 
-    private var mail:String
-    private var password:String
-    private var nickName:String
-
-    constructor(mail:String, password:String, nickName:String){
-        this.validateEmail(mail)
-        this.mail = mail
-        this.password = password
-        this.nickName = nickName
+    init {
+        this.validateMail()
     }
 
     open fun setId(id: Long) {
@@ -41,7 +45,7 @@ abstract class User {
         return this.id!!
     }
 
-    fun isEmail(email : String) : Boolean {
+    fun isMail(email : String) : Boolean {
         return compile(
                 "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                         "\\@" +
@@ -53,29 +57,25 @@ abstract class User {
         ).matcher(email).matches()
     }
 
-    fun validateEmail(email: String) {
-        if (!this.isEmail(email)) {
-            throw InvalidEmailException(email)
+    fun validateMail() {
+        if (!this.isMail(mail)) {
+            throw InvalidEmailException(mail)
         }
     }
 
-    fun mail() : String {
+    open fun obtainMail() : String {
         return this.mail
     }
 
-    open fun password() : String {
-        return  this.password
+    open fun obtainPassword() : String {
+        return this.password
     }
 
-    fun nickname() : String {
+    open fun obtainNickName() : String {
         return this.nickName
     }
 
-    open fun setPassword(aPassword : String)  {
-        this.password = aPassword
-    }
-
-    fun setNickname(aNickname :  String) {
+    open fun setNickname(aNickname :  String) {
         this.nickName = aNickname
     }
 
@@ -83,7 +83,7 @@ abstract class User {
         throw DoNotHaveDonationPrivilege()
     }
 
-    open fun donate(money: Double, comment: String, project: Project) {
+    open fun donate(money: Double, comment: String, project: Project): Donation {
         throw DoNotHaveDonationPrivilege()
     }
 
