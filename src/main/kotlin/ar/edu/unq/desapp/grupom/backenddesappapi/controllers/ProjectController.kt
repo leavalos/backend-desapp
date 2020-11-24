@@ -2,6 +2,7 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.controllers
 
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Project
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
+import ar.edu.unq.desapp.grupom.backenddesappapi.service.email.EmailService
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.project.IProjectService
 import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.models.Response
@@ -26,6 +27,9 @@ class ProjectController {
 
     @Autowired
     lateinit var projectService: IProjectService
+
+    @Autowired
+    private lateinit var emailService: EmailService
 
     @GetMapping("/openProjects")
     fun getOpenProjects(): ResponseEntity<List<Project>> {
@@ -111,4 +115,20 @@ class ProjectController {
 
 
 
+
+    @RequestMapping("/finishProject")
+    fun finishProject(@RequestParam idProject: Int): ResponseEntity<Any> {
+        val start = System.currentTimeMillis()
+        logger.info("Using ProjectController.finishProject() function")
+        return try {
+            projectService.finishProject(idProject.toLong())
+            val end = System.currentTimeMillis()
+            logger.info("UserController.finishProject() takes: ${end - start} ms")
+            ResponseEntity.ok().body(null)
+        } catch (e: Exception) {
+            val end = System.currentTimeMillis()
+            logger.info("UserController.finishProject() takes: ${end - start} ms")
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
 }

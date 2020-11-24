@@ -24,10 +24,16 @@ class LocationController {
     // top ten locations that have not received donations for a long time
     @GetMapping("/toptenforgottenlocations")
     fun topTenForgottenLocations(): ResponseEntity<Any> {
+        val start = System.currentTimeMillis()
+        logger.info("Using LocationController.topTenForgottenLocations() function")
         return try {
             val responseBody: List<String> = locationService.topTenForgottenLocations()
+            val end = System.currentTimeMillis()
+            logger.info("EmailController.sendDailyEmail() takes: ${end - start} ms")
             ResponseEntity.ok(responseBody)
         } catch (e: Exception) {
+            val end = System.currentTimeMillis()
+            logger.info("EmailController.sendDailyEmail() takes: ${end - start} ms")
             ResponseEntity.badRequest().body(e.message)
         }
     }

@@ -34,89 +34,89 @@ class DatabaseInitializate : CommandLineRunner {
         this.createProjects()
         var root = this.createUserroot()
 
-        var user1 = userService.getUserById(1)
-        var user2 = userService.getUserById(2)
-        var user3 = userService.getUserById(3)
-        var user4 = userService.getUserById(4)
+        val user1 = userService.getUserById(1)
+        val user2 = userService.getUserById(2)
+        val user3 = userService.getUserById(3)
+        val user4 = userService.getUserById(4)
         var user5 = userService.getUserById(5)
 
-        var projects = projectService.getOpenProjects()
+        val projects = projectService.getOpenProjects()
 
 
 
         projects.forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a todos los projects abiertos.",
+            val donation = Donation(5000.00, "Estoy donando a todos los projects abiertos.",
                     user1.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
 
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
 
         projects.subList(0, 1).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
 
 
         projects.subList(0, 5).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los primeros 5 proyectos que vi.",
                     user2.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
 
         projects.subList(4,9).forEach { project ->
-            var donation = Donation(5000.00, "Estoy donando a los ultimos 5 proyectos que vi.",
+            val donation = Donation(5000.00, "Estoy donando a los ultimos 5 proyectos que vi.",
                     user3.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
 
         projects.subList(0,3).forEach { project ->
-            var donation = Donation(5000.00, "Soy muy generoso.",
+            val donation = Donation(5000.00, "Soy muy generoso.",
                     user4.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
 
         projects.subList(7,9).forEach { project ->
-            var donation = Donation(200000.00, "Me sobra la guita barats.",
+            val donation = Donation(200000.00, "Me sobra la guita barats.",
                     user1.obtainNickName(), LocalDateTime.now(), project.name)
             userService.makeDonation(donation) }
 
@@ -125,13 +125,13 @@ class DatabaseInitializate : CommandLineRunner {
 
 
     fun createUserDonations() {
-        var user1 = UserDonation("leavalos@gmail.com", "password", "Leavalos")
-        var user2 = UserDonation("jorgito@gmail.com", "password", "Jorgelin")
-        var user3 = UserDonation("leanAntu@gmail.com", "password", "LeanAntu")
-        var user4 = UserDonation("maxi@gmail.com", "password", "MaxiKiosco")
-        var user5 = UserDonation("jesus@gmail.com", "password", "JesusLC")
-        var user6 = UserDonation("eliana@gmail.com", "password", "Eli1234")
-        var user7 = UserDonation("marta@gmail.com", "password", "Martita_")
+        val user1 = UserDonation("leavalos@gmail.com", "password", "Leavalos")
+        val user2 = UserDonation("jorgito@gmail.com", "password", "Jorgelin")
+        val user3 = UserDonation("leanAntu@gmail.com", "password", "LeanAntu")
+        val user4 = UserDonation("maxi@gmail.com", "password", "MaxiKiosco")
+        val user5 = UserDonation("jesus@gmail.com", "password", "JesusLC")
+        val user6 = UserDonation("eliana@gmail.com", "password", "Eli1234")
+        val user7 = UserDonation("marta@gmail.com", "password", "Martita_")
 
         userService.addUser(user1)
         userService.addUser(user2)
@@ -144,13 +144,29 @@ class DatabaseInitializate : CommandLineRunner {
 
 
     fun createUserroot() : UserRoot{
-        var user = UserRoot("root@gmail.com", "root1234", "Admin")
+        val user = UserRoot("root@gmail.com", "root", "Admin")
         userService.addUser(user)
         return user
     }
 
     fun createProjects() {
 
+        val location1 = Location("San Juan", Province.SanJuan, 50, false)
+        val location2 = Location("San Cayetano", Province.BuenosAires, 67, false)
+        val location3 = Location("9 de Julio", Province.BuenosAires, 47, false)
+        val location4 = Location("Villa Fiorito", Province.BuenosAires, 40, false)
+        val location5 = Location("Villa Traful", Province.Neuquen, 41, false)
+        val location6 = Location("Piedras Blancas", Province.BuenosAires, 17, false)
+        val location7 = Location("Villa de Merlo", Province.SanLuis, 17, false)
+        val location8 = Location("Mercedes", Province.BuenosAires, 63, false)
+        val location9 = Location("Villa Arroyito", Province.Cordoba, 22, false)
+        val location10 = Location("San Valle de Catamarca", Province.Catamarca, 10, false)
+        val location11 = Location("Trevelin", Province.Chubut, 10, false)
+        val location12 = Location("Roldan", Province.SantaFe, 14, false)
+        val location13 = Location("Villa Angela", Province.Chaco, 42, false)
+        val location14 = Location("Tilcara", Province.Jujuy, 12, false)
+        val location15 = Location("Los Antiguos", Province.SantaCruz, 33, false)
+        val location16 = Location("Las Leñas", Province.Mendoza, 45, false)
 
 
         var project1: Project = Project("Conectando San Pedro", LocalDate.now(), LocalDate.now().plusMonths(3), 500)

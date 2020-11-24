@@ -13,8 +13,13 @@ interface IProjectService {
 
     fun findByName(name: String): Project
 
+    fun findById(idProject: Long): Project
 
     fun addProject(project: Project) : Project
+
+    fun finishProject(idProject: Long)
+
+    fun obtainDonorsFromAProject(project: Project): List<String>
 
     fun createAndAsssignProject(name: String, moneyFactor: Int?,
                                 minPercentage: Int?, date : LocalDate,

@@ -22,5 +22,7 @@ interface IUserService {
 
     fun makeDonation(donationData: Donation): Donation?
 
+    fun getMailByNickname(nickname: String): String
+
     fun getUserByEmail(email: String): User
 }
