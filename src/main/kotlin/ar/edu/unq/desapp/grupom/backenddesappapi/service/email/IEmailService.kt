@@ -5,4 +5,6 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.Email
 interface IEmailService {
 
     fun sendEmail(email: Email)
+
+    fun sendDailyEmail(): String
 }

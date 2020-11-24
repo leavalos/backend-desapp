@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 interface LocationRepository : JpaRepository<Location, Long> {
 
     // top ten locations that have not received donations for a long time
-    @Query("select top 10 distinct l.name, date " +
+    @Query("select top 10 distinct l.name " +
                "from " +
                "(" +
                " select p.id as p_id, d.date " +
