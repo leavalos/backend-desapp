@@ -15,6 +15,7 @@ import javax.persistence.*
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+// Class User is an account used by a person to register and use the application.
 abstract class User(
 
         @Generated
@@ -45,6 +46,7 @@ abstract class User(
         return this.id!!
     }
 
+    // validate if the email has a correct format.
     fun isMail(email : String) : Boolean {
         return compile(
                 "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
@@ -57,6 +59,7 @@ abstract class User(
         ).matcher(email).matches()
     }
 
+    // throws an exception if the email has not a correct format.
     fun validateMail() {
         if (!this.isMail(mail)) {
             throw InvalidEmailException(mail)

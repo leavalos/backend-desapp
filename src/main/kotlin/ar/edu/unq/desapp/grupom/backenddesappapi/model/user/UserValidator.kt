@@ -1,9 +1,6 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model.user
 
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidEmailFormatException
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidNicknameFormatException
-import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.user.InvalidPasswordFormatException
-
+// Validates the different fields of an user.
 object UserValidator {
 
     /*

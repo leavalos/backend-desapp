@@ -8,6 +8,7 @@ import javax.persistence.FetchType
 import javax.persistence.OneToMany
 
 @Entity
+// Represents a donor user.
 open class UserDonation(mail: String, password: String, nickName: String) : User(mail, password, nickName) {
 
     open var points: Double = 00.00

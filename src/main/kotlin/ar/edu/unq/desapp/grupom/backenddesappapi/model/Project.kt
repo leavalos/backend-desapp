@@ -4,7 +4,6 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import lombok.Generated
-import org.springframework.data.domain.PageRequest
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -173,6 +172,7 @@ class Project {
         this.isFinished = true
     }
 
+    // Finish the project if the needed budget is complete.
     fun finishProjectRaisedMoney() {
         this.verifyNeededBudgetCompleted()
         this.isFinished = true
