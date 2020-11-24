@@ -151,23 +151,6 @@ class DatabaseInitializate : CommandLineRunner {
 
     fun createProjects() {
 
-        val location1 = Location("San Juan", Province.SanJuan, 50, false)
-        val location2 = Location("San Cayetano", Province.BuenosAires, 67, false)
-        val location3 = Location("9 de Julio", Province.BuenosAires, 47, false)
-        val location4 = Location("Villa Fiorito", Province.BuenosAires, 40, false)
-        val location5 = Location("Villa Traful", Province.Neuquen, 41, false)
-        val location6 = Location("Piedras Blancas", Province.BuenosAires, 17, false)
-        val location7 = Location("Villa de Merlo", Province.SanLuis, 17, false)
-        val location8 = Location("Mercedes", Province.BuenosAires, 63, false)
-        val location9 = Location("Villa Arroyito", Province.Cordoba, 22, false)
-        val location10 = Location("San Valle de Catamarca", Province.Catamarca, 10, false)
-        val location11 = Location("Trevelin", Province.Chubut, 10, false)
-        val location12 = Location("Roldan", Province.SantaFe, 14, false)
-        val location13 = Location("Villa Angela", Province.Chaco, 42, false)
-        val location14 = Location("Tilcara", Province.Jujuy, 12, false)
-        val location15 = Location("Los Antiguos", Province.SantaCruz, 33, false)
-        val location16 = Location("Las Leñas", Province.Mendoza, 45, false)
-
 
         var project1: Project = Project("Conectando San Pedro", LocalDate.now(), LocalDate.now().plusMonths(3), 500)
         var project2: Project = Project("Conectividad X San Cayetano", 2000.00,LocalDate.now(), LocalDate.now().plusMonths(3), 900, 90)
