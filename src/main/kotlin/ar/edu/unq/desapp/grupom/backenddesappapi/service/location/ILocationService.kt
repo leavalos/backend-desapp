@@ -7,4 +7,6 @@ interface ILocationService {
     fun topTenForgottenLocations(): List<String>
 
     fun addLocation(location: Location)
+
+    fun locationsWithoutProject() : List<Location>
 }

@@ -31,4 +31,15 @@ class LocationController {
             ResponseEntity.badRequest().body(e.message)
         }
     }
+
+    // top ten locations that have not received donations for a long time
+    @GetMapping("/locations")
+    fun locations(): ResponseEntity<Any> {
+        return try {
+            val responseBody: List<Location> = locationService.locationsWithoutProject()
+            ResponseEntity.ok(responseBody)
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().body(e.message)
+        }
+    }
 }

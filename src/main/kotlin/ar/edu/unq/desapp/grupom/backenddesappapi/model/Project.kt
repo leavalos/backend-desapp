@@ -4,6 +4,7 @@ import ar.edu.unq.desapp.grupom.backenddesappapi.model.exceptions.project.*
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import lombok.Generated
+import org.springframework.data.domain.PageRequest
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -18,6 +19,7 @@ class Project {
 
 
     @Generated
+    @Column(unique = true)
     var name: String
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -36,7 +38,7 @@ class Project {
     @Generated
     var minPercentageToFinish: Int
 
-    constructor(name: String, beginningDate: LocalDate, finishDate: LocalDate, population: Int) {
+    constructor(name: String, beginningDate: LocalDate = LocalDate.now(), finishDate: LocalDate, population: Int) {
         this.verifyName(name)
         this.name = name
         this.donations = mutableListOf()
@@ -50,11 +52,11 @@ class Project {
 
     constructor(
             name: String,
-            moneyFactor: Double,
-            beginningDate: LocalDate,
+            moneyFactor: Double =  1000.00,
+            beginningDate: LocalDate = LocalDate.now(),
             finishDate: LocalDate,
             population: Int,
-            minPercentage: Int) {
+            minPercentage: Int = 100) {
         this.verifyParameters(name, moneyFactor, minPercentage, beginningDate, finishDate)
         this.name = name
         this.donations = mutableListOf()
@@ -168,6 +170,11 @@ class Project {
     fun finishProject() {
         this.verifyNeededBudgetCompleted()
         this.verifyFinishDateHasPassed()
+        this.isFinished = true
+    }
+
+    fun finishProjectRaisedMoney() {
+        this.verifyNeededBudgetCompleted()
         this.isFinished = true
     }
 

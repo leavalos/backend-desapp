@@ -16,13 +16,16 @@ import javax.persistence.*
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 abstract class User(
+
         @Generated
+        @Column(unique = true)
         protected open var mail: String,
 
         @Generated
         protected open var password: String,
 
         @Generated
+        @Column(unique = true)
         protected open var nickName: String) {
 
 

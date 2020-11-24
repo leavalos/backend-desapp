@@ -13,16 +13,14 @@ import java.time.LocalDateTime
 interface LocationRepository : JpaRepository<Location, Long> {
 
     // top ten locations that have not received donations for a long time
-       @Query("SELECT DISTINCT loc.name FROM Location loc " +
-               "JOIN loc.project proj " +
-               "JOIN proj.donations don " +
-               "WHERE proj.isFinished = False " +
-               "ORDER BY don.date ASC")
+   @Query("SELECT DISTINCT(loc.name) FROM Location loc " +
+           "JOIN loc.project proj " +
+           "JOIN proj.donations don " +
+           "WHERE proj.isFinished = False " +
+
+           "ORDER BY date ASC NULLS LAST")
     fun topTenForgottenLocations(pageable: Pageable =  PageRequest.of(0,10)): List<String>
 
-
-   // @Query("SELECT projDon.name FROM " +
-    //        "(SELECT * FROM Project as project join project.donations as donation " +
-     //       "where project.isFinished = False ORDER BY donation.date ASC) AS projDon")
-    //fun topTenForgottenLocations(): List<String>
+    @Query("SELECT loc FROM Location loc where loc.project = null")
+    fun locationsWithoutProject() : List<Location>
 }

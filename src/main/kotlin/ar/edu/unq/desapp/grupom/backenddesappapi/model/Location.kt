@@ -1,9 +1,11 @@
 package ar.edu.unq.desapp.grupom.backenddesappapi.model
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect
 import javax.persistence.*
 import lombok.Generated
 
 @Entity
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 class Location {
 
     @Id

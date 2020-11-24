@@ -16,6 +16,10 @@ class LocationService: ILocationService {
         locationRepository.save(location)
     }
 
+    override fun locationsWithoutProject(): List<Location> {
+        return locationRepository.locationsWithoutProject()
+    }
+
     override fun topTenForgottenLocations(): List<String>{
         return locationRepository.topTenForgottenLocations()
     }

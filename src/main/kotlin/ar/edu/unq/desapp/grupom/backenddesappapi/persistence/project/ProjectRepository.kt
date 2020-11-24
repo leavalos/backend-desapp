@@ -10,7 +10,7 @@ import java.time.LocalDate
 @Repository
 interface ProjectRepository : JpaRepository<Project, Long> {
 
-    @Query(value = "SELECT * FROM PROJECT p WHERE p.IS_FINISHED = False", nativeQuery = true)
+    @Query("SELECT p FROM Location loc join loc.project as p WHERE p.isFinished = False")
     fun getOpenProjects(): List<Project>
 
     @Query(value = "SELECT * FROM PROJECT p WHERE MONTH(p.FINISH_DATE) = MONTH(:currentDate)", nativeQuery = true)

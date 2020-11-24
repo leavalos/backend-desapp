@@ -43,6 +43,10 @@ class UserService: IUserService{
         return userRepository.findById(userId).orElseThrow { UserNotFoundException() }
     }
 
+    override fun getUserByEmail(email: String): User {
+        return userRepository.findByEmail(email).orElseThrow { UserNotFoundException() }
+    }
+
     override fun createUserDonation(user: UserDonation): User {
         UserValidator.validateUser(user.obtainMail(), user.obtainPassword(), user.obtainNickName())
         this.checkIfEmailAlreadyExists(user.obtainMail())
@@ -52,7 +56,7 @@ class UserService: IUserService{
     }
 
     override fun getByMail(email: String): User {
-        val user: User? = userRepository.findByEmail(email)
+        val user: User? = userRepository.findByEmail(email).get()
         if (user != null) {
             return user
         }
