@@ -78,6 +78,10 @@ class UserService: IUserService{
         }
     }
 
+    override fun getMailByNickname(nickname: String): String {
+        return userRepository.findByUsername(nickname).obtainMail()
+    }
+
     override fun putUser(userId: Long, newUser: User) {
         val foundUser = this.getUserById(userId)
         newUser.setId(foundUser.getId())

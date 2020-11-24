@@ -42,10 +42,17 @@ class EmailService: IEmailService {
         return mailMessage
     }
 
+    override fun sendMailThatProjectIsFinished(donorMails: List<String>, projectName: String) {
+        donorMails.forEach {
+            sendEmail(Email(
+                            it, "$projectName is finished",
+                            "Thank you for your contribution!")) }
+    }
 
     @Scheduled(cron = "0 0 12 * * ?")
     override fun sendDailyEmail(): String {
-        val emailMessage = obtainEmailBody(obtainTopTenForgottenLocations(), obtainTopTenBestDonations())
+        val emailMessage =
+                obtainEmailBody(obtainTopTenForgottenLocations(), obtainTopTenBestDonations())
         sendMailToAllUsers(emailMessage)
         return emailMessage
     }
