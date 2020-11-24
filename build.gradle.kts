@@ -45,6 +45,8 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.mockito:mockito-core:3.5.10")
 	testImplementation("io.mockk:mockk:1.10.0")
+	testImplementation("com.tngtech.archunit:archunit-junit4:0.14.1")
+
 }
 
 
