@@ -1,15 +1,22 @@
 ---------------------------------------------------------------------
-TAG 1.0
+TAG 3.0
 ---------------------------------------------------------------------
 NEW FEATURES:
-* Classes for Location, User (UserRoot and UserDonation), Project, Donation added.
-* Exceptions for specific causes added.
-* Test added.
-* Points system added.
-* Donations system added.
+* Mail sender
+* Auth 0
+* Frontend registration
+* Frontend admin system
+* Logging of services
+* Architecture test
+* Filter of proyects next to be finish
+* Validations client/server side
+* Date/number formatter 
 
 NOTES:
-* Points earned register.
-* Codacy coverage dashboard.
+* Deploy apps in heroku
+* Half of arch tests fail
+
 
 KNOWN ISSUES:
+* Close project take a too much time
+
