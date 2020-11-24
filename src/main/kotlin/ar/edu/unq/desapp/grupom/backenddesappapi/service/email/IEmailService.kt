@@ -9,4 +9,6 @@ interface IEmailService {
     fun sendDailyEmail(): String
 
     fun sendMailThatProjectIsFinished(donorMails: List<String>, projectName: String)
+
+    fun sendEmailToRegisteredUser(userMail: String)
 }

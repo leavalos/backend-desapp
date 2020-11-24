@@ -46,7 +46,13 @@ class EmailService: IEmailService {
         donorMails.forEach {
             sendEmail(Email(
                             it, "$projectName is finished",
-                            "Thank you for your contribution!")) }
+                            "With your contribution, now a Location is connected!")) }
+    }
+
+    override fun sendEmailToRegisteredUser(userMail: String) {
+        sendEmail(Email(
+                userMail, "Welcome to our Crowdfunding page", "Thanks for your registration!"
+        ))
     }
 
     @Scheduled(cron = "0 0 12 * * ?")

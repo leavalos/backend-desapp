@@ -3,6 +3,7 @@ package ar.edu.unq.desapp.grupom.backenddesappapi.controllers
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.Donation
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.User
 import ar.edu.unq.desapp.grupom.backenddesappapi.model.user.UserDonation
+import ar.edu.unq.desapp.grupom.backenddesappapi.service.email.EmailService
 import ar.edu.unq.desapp.grupom.backenddesappapi.service.user.UserService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.*
 class UserController {
 
     var logger: Logger = LoggerFactory.getLogger(this.javaClass)
+
+    @Autowired
+    lateinit var emailService: EmailService
 
     @Autowired
     lateinit var userService: UserService
@@ -43,6 +47,7 @@ class UserController {
         logger.info("Parameters: user: $user")
 
         val userDonationCreated = userService.createUserDonation(user)
+        emailService.sendEmailToRegisteredUser(user.obtainMail())
         val response = ResponseEntity.status(HttpStatus.CREATED).body(userDonationCreated)
 
         val end = System.currentTimeMillis()
